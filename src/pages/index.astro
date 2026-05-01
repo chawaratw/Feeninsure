@@ -5,6 +5,7 @@ import ProductCard from '@components/ProductCard.astro';
 import MeetFeen from '@components/MeetFeen.astro';
 import { SITE } from '@lib/site';
 import { t } from '@i18n/strings';
+import { asset } from '@lib/asset';
 
 const locale = 'th' as const;
 
@@ -16,7 +17,7 @@ const featured = [
     coverage: 'สูงสุด ฿120 ล้าน/ปี',
     badge: 'Top Plan',
     rating: 5 as const,
-    image: '/images/lifestyle/boat-sunset.jpg',
+    image: asset('/images/lifestyle/boat-sunset.jpg'),
     imageAlt: 'ผู้หญิงบนเรือยอชต์ตอนพระอาทิตย์ตก สื่อถึงการใช้ชีวิตอย่างเต็มที่',
   },
   {
@@ -26,7 +27,7 @@ const featured = [
     coverage: 'วงเงินเพิ่มเป็น 2 เท่าเมื่อโรคร้าย',
     badge: 'Most Online-Friendly',
     rating: 5 as const,
-    image: '/images/lifestyle/friends-sunset.jpg',
+    image: asset('/images/lifestyle/friends-sunset.jpg'),
     imageAlt: 'เพื่อนสองคนนั่งบนรถออฟโรดยามพระอาทิตย์ตก',
   },
   {
@@ -36,7 +37,7 @@ const featured = [
     coverage: 'คุ้มครอง 81 โรค · เคลมซ้ำได้',
     badge: 'Repeat Claims',
     rating: 4 as const,
-    image: '/images/lifestyle/sailor.jpg',
+    image: asset('/images/lifestyle/sailor.jpg'),
     imageAlt: 'ผู้ชายในชุดเดินเรือบนเรือใบ สื่อถึงการเดินทางและการใช้ชีวิต',
   },
 ];
@@ -62,7 +63,7 @@ const homeSchema = {
       ───────────────────────────────────────────── */}
   <section class="relative h-[90vh] min-h-[600px] max-h-[900px] overflow-hidden -mt-[1px]">
     <img
-      src="/images/lifestyle/boat-sunset.jpg"
+      src={asset('/images/lifestyle/boat-sunset.jpg')}
       alt="ชีวิตพรีเมียมบนเรือยอชต์ที่ทะเลเมดิเตอเรเนียน — feeninsure"
       class="absolute inset-0 h-full w-full object-cover"
       fetchpriority="high"
@@ -141,7 +142,7 @@ const homeSchema = {
     <div class="container-wide grid grid-cols-12 gap-4 sm:gap-6">
       {/* Big left photo */}
       <figure class="col-span-12 lg:col-span-7 relative aspect-[4/3] lg:aspect-[5/4] overflow-hidden rounded-3xl">
-        <img src="/images/lifestyle/couple-cadillac.jpg" alt="คู่รักออกเดินทางในรถ Cadillac คลาสสิก" loading="lazy" class="absolute inset-0 h-full w-full object-cover" />
+        <img src={asset('/images/lifestyle/couple-cadillac.jpg')} alt="คู่รักออกเดินทางในรถ Cadillac คลาสสิก" loading="lazy" class="absolute inset-0 h-full w-full object-cover" />
         <figcaption class="absolute bottom-6 left-6 right-6 text-cream">
           <p class="text-xs uppercase tracking-[0.2em] mb-2 opacity-80">เดินทาง</p>
           <p class="font-display text-2xl italic">"ทริปครอบครัวที่ไม่ต้องเลื่อนเพราะใบเสร็จโรงพยาบาล"</p>
@@ -152,7 +153,7 @@ const homeSchema = {
       {/* Stacked right column */}
       <div class="col-span-12 lg:col-span-5 grid grid-cols-1 gap-4 sm:gap-6">
         <figure class="relative aspect-[4/3] overflow-hidden rounded-3xl">
-          <img src="/images/lifestyle/seaside-friends.jpg" alt="เพื่อนใช้เวลาด้วยกันริมทะเล" loading="lazy" class="absolute inset-0 h-full w-full object-cover" />
+          <img src={asset('/images/lifestyle/seaside-friends.jpg')} alt="เพื่อนใช้เวลาด้วยกันริมทะเล" loading="lazy" class="absolute inset-0 h-full w-full object-cover" />
           <figcaption class="absolute bottom-6 left-6 right-6 text-cream">
             <p class="text-xs uppercase tracking-[0.2em] mb-2 opacity-80">มิตรภาพ</p>
             <p class="font-display text-xl italic">"ช่วงเวลาดีๆ ที่ไม่มีวันถูกเลื่อน"</p>
@@ -161,7 +162,7 @@ const homeSchema = {
         </figure>
 
         <figure class="relative aspect-[4/3] overflow-hidden rounded-3xl">
-          <img src="/images/lifestyle/car-countryside.jpg" alt="รถยนต์คลาสสิกในชนบท" loading="lazy" class="absolute inset-0 h-full w-full object-cover" />
+          <img src={asset('/images/lifestyle/car-countryside.jpg')} alt="รถยนต์คลาสสิกในชนบท" loading="lazy" class="absolute inset-0 h-full w-full object-cover" />
           <figcaption class="absolute bottom-6 left-6 right-6 text-cream">
             <p class="text-xs uppercase tracking-[0.2em] mb-2 opacity-80">เสรีภาพ</p>
             <p class="font-display text-xl italic">"ออกไปได้เสมอ — ไม่ต้องคิดเรื่องค่ารักษา"</p>
@@ -208,7 +209,7 @@ const homeSchema = {
     <div class="container-wide grid lg:grid-cols-12 gap-12 items-center">
       <div class="lg:col-span-7 lg:order-2 relative">
         <figure class="relative aspect-[4/5] lg:aspect-[3/4] overflow-hidden rounded-3xl">
-          <img src="/images/lifestyle/sailor.jpg" alt="ชีวิตที่กล้าออกเดินทาง" loading="lazy" class="absolute inset-0 h-full w-full object-cover" />
+          <img src={asset('/images/lifestyle/sailor.jpg')} alt="ชีวิตที่กล้าออกเดินทาง" loading="lazy" class="absolute inset-0 h-full w-full object-cover" />
         </figure>
       </div>
       <div class="lg:col-span-5 lg:order-1">
@@ -257,7 +258,7 @@ const homeSchema = {
         </div>
       </div>
       <figure class="relative aspect-[4/3] rounded-3xl overflow-hidden bg-teal-700">
-        <img src="/images/lifestyle/friends-sunset.jpg" alt="แผนที่ใช่ คือแผนที่ออกแบบให้คุณโดยเฉพาะ" loading="lazy" class="absolute inset-0 h-full w-full object-cover opacity-90" />
+        <img src={asset('/images/lifestyle/friends-sunset.jpg')} alt="แผนที่ใช่ คือแผนที่ออกแบบให้คุณโดยเฉพาะ" loading="lazy" class="absolute inset-0 h-full w-full object-cover opacity-90" />
         <div class="absolute inset-0 bg-gradient-to-t from-teal-900/70 via-teal-900/20 to-transparent"></div>
         <figcaption class="absolute bottom-6 left-6 right-6 text-cream">
           <p class="font-display text-3xl italic leading-tight">"I want the best plan,<br/>not the most-sold plan."</p>

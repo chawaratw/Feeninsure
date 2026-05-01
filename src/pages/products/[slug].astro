@@ -7,6 +7,7 @@ import ProductDetailsTable from '@components/ProductDetailsTable.astro';
 import QuoteForm from '@components/QuoteForm.astro';
 import { getCollection, type CollectionEntry } from 'astro:content';
 import { SITE } from '@lib/site';
+import { asset } from '@lib/asset';
 
 export async function getStaticPaths() {
   const products = await getCollection('products');
@@ -29,16 +30,16 @@ const onlineFitLabel = { high: 'ปิดงานออนไลน์ได้
 
 // Per-product editorial hero photo. Themed to product narrative.
 const heroImageMap: Record<string, string> = {
-  'first-class-ultra-bdms':  '/images/lifestyle/boat-sunset.jpg',
-  'first-class-ultra':       '/images/lifestyle/sailor.jpg',
-  'double-care':             '/images/lifestyle/friends-sunset.jpg',
-  'multi-care':              '/images/lifestyle/seaside-friends.jpg',
-  'my-style-wealth-ultra':   '/images/lifestyle/couple-cadillac.jpg',
-  'my-pension-five':         '/images/lifestyle/car-countryside.jpg',
-  'superior-health':         '/images/lifestyle/sailor.jpg',
-  'my-wealth-legacy':        '/images/lifestyle/couple-cadillac.jpg',
+  'first-class-ultra-bdms':  asset('/images/lifestyle/boat-sunset.jpg'),
+  'first-class-ultra':       asset('/images/lifestyle/sailor.jpg'),
+  'double-care':             asset('/images/lifestyle/friends-sunset.jpg'),
+  'multi-care':              asset('/images/lifestyle/seaside-friends.jpg'),
+  'my-style-wealth-ultra':   asset('/images/lifestyle/couple-cadillac.jpg'),
+  'my-pension-five':         asset('/images/lifestyle/car-countryside.jpg'),
+  'superior-health':         asset('/images/lifestyle/sailor.jpg'),
+  'my-wealth-legacy':        asset('/images/lifestyle/couple-cadillac.jpg'),
 };
-const heroImage = heroImageMap[slug] ?? '/images/lifestyle/boat-sunset.jpg';
+const heroImage = heroImageMap[slug] ?? asset('/images/lifestyle/boat-sunset.jpg');
 
 const productSchema = {
   '@context': 'https://schema.org',

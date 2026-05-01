@@ -75,13 +75,13 @@ const hasAlternate = EN_AVAILABLE.has(cleanPath);
 
     {/* Theme + brand */}
     <meta name="theme-color" content="#007B87" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
-    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="icon" type="image/svg+xml" href={import.meta.env.BASE_URL + 'favicon.svg'} />
+    <link rel="apple-touch-icon" href={import.meta.env.BASE_URL + 'icons/apple-touch-icon.png'} />
+    <link rel="manifest" href={import.meta.env.BASE_URL + 'manifest.webmanifest'} />
 
     {/* Self-hosted fonts — preload the two most-used weights for fast first paint */}
-    <link rel="preload" href="/fonts/IBMPlexSansThai-Regular.ttf" as="font" type="font/ttf" crossorigin />
-    <link rel="preload" href="/fonts/CormorantGaramond-SemiBold.ttf" as="font" type="font/ttf" crossorigin />
+    <link rel="preload" href={import.meta.env.BASE_URL + 'fonts/IBMPlexSansThai-Regular.ttf'} as="font" type="font/ttf" crossorigin />
+    <link rel="preload" href={import.meta.env.BASE_URL + 'fonts/CormorantGaramond-SemiBold.ttf'} as="font" type="font/ttf" crossorigin />
 
     {/* Schema.org: site-wide InsuranceAgent */}
     <SchemaInsuranceAgent />
