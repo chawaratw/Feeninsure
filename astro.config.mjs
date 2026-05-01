@@ -5,7 +5,8 @@ import mdx from '@astrojs/mdx';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://feeninsure.com',
+  site: 'https://chawaratw.github.io',
+  base: '/Feeninsure',
   trailingSlash: 'never',
   prefetch: { prefetchAll: true, defaultStrategy: 'viewport' },
   i18n: {
