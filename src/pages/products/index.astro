@@ -1,0 +1,60 @@
+---
+import Layout from '@layouts/Layout.astro';
+import ProductCard from '@components/ProductCard.astro';
+import { getCollection } from 'astro:content';
+import { SITE } from '@lib/site';
+
+const locale = 'th' as const;
+const products = (await getCollection('products')).sort((a, b) => a.data.rank - b.data.rank);
+
+const itemListSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  itemListElement: products.map((p, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    url: `${SITE.url}/products/${p.slug}`,
+    name: p.data.nameTh,
+  })),
+};
+---
+<Layout
+  title="ผลิตภัณฑ์ Allianz Ayudhya สำหรับ Premium / HNW — feeninsure"
+  description="8 แผนประกันชีวิตและสุขภาพของ Allianz Ayudhya ที่คัดมาให้กลุ่ม Premium / HNW โดยฟีน — เปรียบเทียบความคุ้มครอง วงเงิน และความเหมาะสม"
+  locale={locale}
+  jsonLd={itemListSchema}
+>
+  <section class="container-wide py-section">
+    <header class="mb-16 max-w-prose-narrow">
+      <p class="text-xs uppercase tracking-[0.2em] text-teal-700 mb-6">ผลิตภัณฑ์</p>
+      <h1 class="text-display-xl font-display text-ink leading-[1.05]">
+        8 แผน · 1 ที่ปรึกษา
+      </h1>
+      <p class="mt-8 text-lg text-stone-600 leading-relaxed">
+        ฟีนคัดผลิตภัณฑ์จาก Allianz Ayudhya กว่า 15 รายการ
+        เหลือ 8 แผนหลักที่ตอบโจทย์ Premium/HNW ได้กว่า 80% ของความต้องการ
+        แต่ละแผนมีจุดแข็งต่างกัน — เลือกตามชีวิตของคุณ ไม่ใช่ตามที่ตัวแทนได้ค่าคอม
+      </p>
+    </header>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {products.map((p) => (
+        <ProductCard
+          href={`/products/${p.slug}`}
+          name={p.data.nameTh}
+          audience={p.data.audienceTh}
+          coverage={p.data.coverageTh}
+          badge={p.data.badge}
+          rating={p.data.rating as 1|2|3|4|5}
+        />
+      ))}
+    </div>
+
+    <p class="mt-16 text-center text-sm text-stone-500 max-w-prose-narrow mx-auto">
+      หมายเหตุ: ข้อมูลผลิตภัณฑ์ทั้งหมดเป็นการสรุปจากแหล่งทางการของ Allianz Ayudhya
+      สำหรับเงื่อนไขและรายละเอียดผูกพัน กรุณาดูที่
+      <a href={SITE.allianz.home} class="underline underline-offset-4 text-teal-700 hover:text-teal-900">allianz.co.th</a>
+      หรือปรึกษาฟีนโดยตรง
+    </p>
+  </section>
+</Layout>

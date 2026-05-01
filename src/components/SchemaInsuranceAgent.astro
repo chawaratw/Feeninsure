@@ -1,0 +1,42 @@
+---
+// Site-wide structured data: identifies Feen as an InsuranceAgent / Person
+// so AI engines and Google's knowledge graph attach the right entity.
+import { SITE } from '@lib/site';
+
+const data = {
+  '@context': 'https://schema.org',
+  '@type': 'InsuranceAgency',
+  '@id': `${SITE.url}/#agency`,
+  name: SITE.brand.full,
+  url: SITE.url,
+  telephone: `+66${SITE.contact.phone.replace(/^0/, '')}`,
+  email: SITE.contact.email || undefined,
+  areaServed: { '@type': 'Country', name: 'Thailand' },
+  sameAs: [
+    SITE.social.facebook,
+    SITE.social.instagram,
+    SITE.social.tiktok,
+    SITE.social.youtube,
+  ],
+  founder: {
+    '@type': 'Person',
+    '@id': `${SITE.url}/#feen`,
+    name: SITE.agent.nameEn,
+    alternateName: [SITE.agent.nameTh, SITE.agent.nickname],
+    jobTitle: SITE.agent.titleEn,
+    worksFor: { '@type': 'Organization', name: SITE.agent.company },
+    affiliation: { '@type': 'Organization', name: SITE.agent.team },
+    knowsAbout: [
+      'Health insurance', 'Life insurance', 'Critical illness insurance',
+      'Unit-linked insurance', 'Retirement planning', 'High-net-worth financial planning',
+      'ประกันสุขภาพ', 'ประกันชีวิต', 'ประกันโรคร้ายแรง', 'วางแผนเกษียณ',
+    ],
+  },
+  parentOrganization: {
+    '@type': 'Organization',
+    name: SITE.agent.company,
+    url: SITE.allianz.home,
+  },
+};
+---
+<script type="application/ld+json" set:html={JSON.stringify(data)} />

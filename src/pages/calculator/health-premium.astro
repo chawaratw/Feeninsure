@@ -1,0 +1,185 @@
+---
+import Layout from '@layouts/Layout.astro';
+import LineCTA from '@components/LineCTA.astro';
+import { SITE } from '@lib/site';
+const locale = 'th' as const;
+---
+<Layout
+  title="ประเมินแผนสุขภาพที่เหมาะกับคุณ — feeninsure"
+  description="ประเมินเบื้องต้นว่าแผนประกันสุขภาพ Allianz Ayudhya แบบไหนเหมาะกับคุณ — ใช้ฟรี ไม่ต้องลงทะเบียน เพื่อราคาที่แม่นยำต้องผ่าน Underwriting"
+  locale={locale}
+>
+  <section class="container-wide py-section">
+    <header class="mb-12 max-w-prose-narrow">
+      <p class="text-xs uppercase tracking-[0.3em] text-teal-700 mb-6">ประเมินแผน · สุขภาพ</p>
+      <h1 class="text-display-lg font-display text-ink mb-6 leading-[1.05]">
+        แผนสุขภาพ —<br/>
+        <span class="italic">แบบไหนเหมาะ?</span>
+      </h1>
+      <p class="text-stone-600 leading-relaxed">
+        ตอบ 4 ข้อ — เครื่องมือนี้แนะนำแผนของ Allianz Ayudhya ที่น่าจะตรงกับคุณ
+        <strong class="text-ink">ไม่แสดงเบี้ยเป็นตัวเลข</strong> เพราะค่าเบี้ยจริงต้องผ่านการ Underwriting
+        (อายุ เพศ ประวัติสุขภาพ อาชีพ) — ขอใบเสนอราคาที่แม่นยำได้ทาง LINE
+      </p>
+      <p class="mt-6">
+        <a href="/find-my-plan" class="text-sm text-teal-700 hover:text-teal-900 underline underline-offset-4">
+          ต้องการแบบสอบถามแบบเต็ม? ลอง Find My Plan (5 คำถาม) →
+        </a>
+      </p>
+    </header>
+
+    <div class="grid lg:grid-cols-5 gap-10 max-w-5xl">
+      <form id="estimator-form" class="lg:col-span-3 rounded-3xl bg-stone-100 p-8 ring-1 ring-stone-200 space-y-6">
+        <label class="block">
+          <span class="block text-xs uppercase tracking-widest text-stone-500 mb-2">อายุ</span>
+          <input id="age" type="number" min="20" max="65" value="35" class="w-full rounded-lg border border-stone-200 bg-cream px-4 py-3 focus:outline-none focus:border-teal-600" />
+        </label>
+
+        <fieldset>
+          <legend class="block text-xs uppercase tracking-widest text-stone-500 mb-2">โรงพยาบาลที่ใช้บ่อย</legend>
+          <div class="grid sm:grid-cols-2 gap-3">
+            {[
+              ['bdms', 'เครือ BDMS', 'Bumrungrad / BNH / Samitivej'],
+              ['any', 'ทุกโรงพยาบาลในไทย', 'ความยืดหยุ่น'],
+              ['intl', 'ต่างประเทศบ่อย', 'รักษาทั่วโลก'],
+              ['critical', 'เน้นโรคร้ายแรง', 'มะเร็ง · หัวใจ · สมอง'],
+            ].map(([v, l, s]) => (
+              <label>
+                <input type="radio" name="hospital" value={v} checked={v==='bdms'} class="peer hidden" />
+                <span class="block px-4 py-3 rounded-lg border border-stone-200 peer-checked:border-teal-600 peer-checked:bg-cream cursor-pointer transition">
+                  <span class="block font-medium text-sm">{l}</span>
+                  <span class="block text-xs text-stone-500 mt-0.5">{s}</span>
+                </span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend class="block text-xs uppercase tracking-widest text-stone-500 mb-2">งบเบี้ย/ปี ที่จ่ายไหว</legend>
+          <div class="grid grid-cols-2 gap-3">
+            {[
+              ['low', '< ฿80K'],
+              ['mid', '฿80–150K'],
+              ['high', '฿150–300K'],
+              ['top', '> ฿300K'],
+            ].map(([v, l]) => (
+              <label>
+                <input type="radio" name="budget" value={v} checked={v==='mid'} class="peer hidden" />
+                <span class="block px-4 py-3 text-center rounded-lg border border-stone-200 peer-checked:border-teal-600 peer-checked:bg-cream peer-checked:text-teal-700 cursor-pointer text-sm transition font-medium">
+                  {l}
+                </span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend class="block text-xs uppercase tracking-widest text-stone-500 mb-2">มีกังวลโรคร้าย?</legend>
+          <div class="flex gap-3">
+            <label class="flex-1"><input type="radio" name="ci" value="y" class="peer hidden" />
+              <span class="block text-center px-4 py-3 rounded-lg border border-stone-200 peer-checked:border-teal-600 peer-checked:bg-cream cursor-pointer">มี (ครอบครัวมีประวัติ)</span>
+            </label>
+            <label class="flex-1"><input type="radio" name="ci" value="n" checked class="peer hidden" />
+              <span class="block text-center px-4 py-3 rounded-lg border border-stone-200 peer-checked:border-teal-600 peer-checked:bg-cream cursor-pointer">ปกติ</span>
+            </label>
+          </div>
+        </fieldset>
+      </form>
+
+      <aside class="lg:col-span-2">
+        <div class="sticky top-24 rounded-3xl bg-teal-600 text-cream p-8">
+          <p class="text-xs uppercase tracking-widest text-cream/70 mb-3">แผนที่แนะนำ</p>
+          <p class="font-display text-3xl leading-tight mb-4" id="rec-name">First Class Ultra</p>
+          <p class="text-cream/80 text-sm leading-relaxed mb-6" id="rec-reason">กำลังคำนวณ...</p>
+          <a id="rec-link" href="/products/first-class-ultra" class="block text-center px-6 py-3 rounded-full bg-cream text-teal-700 font-medium hover:bg-cream/90 transition mb-3">
+            ดูแผนนี้ →
+          </a>
+          <a href="/find-my-plan" class="block text-center text-cream/80 text-sm hover:text-cream underline underline-offset-4">
+            หรือทำแบบสอบถามแบบเต็ม
+          </a>
+        </div>
+      </aside>
+    </div>
+
+    <p class="mt-12 text-xs text-stone-500 max-w-prose-narrow">
+      หมายเหตุ: คำแนะนำจากเครื่องมือนี้เป็นเพียงจุดเริ่มต้น —
+      ค่าเบี้ยจริงและการรับประกันต้องผ่าน Underwriting ของ Allianz Ayudhya
+      ปรึกษาฟีนเพื่อใบเสนอราคาที่แม่นยำสำหรับโปรไฟล์ของคุณ
+    </p>
+  </section>
+
+  <script is:inline>
+    (function () {
+      // Map inputs → product slug + reasoning. Pure logic, deterministic.
+      function recommend(opts) {
+        const { age, hospital, budget, ci } = opts;
+
+        // Hospital is a strong signal
+        if (hospital === 'intl') return {
+          slug: 'superior-health',
+          name: 'ซูพีเรีย เฮลท์',
+          reason: 'คุณเดินทางต่างประเทศ — ซูพีเรีย เฮลท์ ครอบคลุมการรักษาทั่วโลก รวมเครือข่าย Allianz Care',
+        };
+        if (hospital === 'critical' || ci === 'y') {
+          return {
+            slug: 'double-care',
+            name: 'ปลดล็อค ดับเบิล แคร์',
+            reason: 'เมื่อมีกังวลโรคร้าย แผนนี้ปลดล็อควงเงินเพิ่ม 2 เท่าทันทีเมื่อตรวจพบ — ครอบคลุมค่ารักษาระยะยาว',
+          };
+        }
+
+        // BDMS preference + decent budget → @BDMS plan
+        if (hospital === 'bdms' && (budget === 'high' || budget === 'top')) {
+          return {
+            slug: 'first-class-ultra-bdms',
+            name: 'First Class Ultra @BDMS',
+            reason: 'คุณใช้เครือ BDMS เป็นหลัก + งบรองรับระดับ Beyond Platinum — แผนนี้คุ้มที่สุดสำหรับโปรไฟล์คุณ',
+          };
+        }
+
+        // Tight budget → Multi Care (cheaper, lump-sum critical illness)
+        if (budget === 'low') {
+          return {
+            slug: 'multi-care',
+            name: 'มัลติ แคร์',
+            reason: 'งบเริ่มต้น — มัลติ แคร์ ให้เงินก้อนเมื่อตรวจพบโรคร้าย 81 โรค เคลมซ้ำได้ คุ้มเบี้ยที่จ่าย',
+          };
+        }
+
+        // BDMS + mid budget
+        if (hospital === 'bdms') return {
+          slug: 'first-class-ultra-bdms',
+          name: 'First Class Ultra @BDMS (Platinum)',
+          reason: 'คุณใช้เครือ BDMS — แผน Platinum ครอบคลุมและคุ้มกว่าระดับ Beyond Platinum สำหรับงบนี้',
+        };
+
+        // Default: any-hospital flexibility
+        return {
+          slug: 'first-class-ultra',
+          name: 'First Class Ultra',
+          reason: 'แผน Ultra ใช้ได้ทุกโรงพยาบาลในไทย ความยืดหยุ่นสูง วงเงินสูงสุด ฿100M/ปี',
+        };
+      }
+
+      const form = document.getElementById('estimator-form');
+      const nameEl = document.getElementById('rec-name');
+      const reasonEl = document.getElementById('rec-reason');
+      const linkEl = document.getElementById('rec-link');
+
+      function update() {
+        const age = parseInt(document.getElementById('age').value || '35', 10);
+        const hospital = (form.querySelector('input[name="hospital"]:checked') || {}).value || 'bdms';
+        const budget = (form.querySelector('input[name="budget"]:checked') || {}).value || 'mid';
+        const ci = (form.querySelector('input[name="ci"]:checked') || {}).value || 'n';
+        const r = recommend({ age, hospital, budget, ci });
+        nameEl.textContent = r.name;
+        reasonEl.textContent = r.reason;
+        linkEl.setAttribute('href', `/products/${r.slug}`);
+      }
+
+      form.addEventListener('input', update);
+      update();
+    })();
+  </script>
+</Layout>

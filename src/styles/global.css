@@ -1,0 +1,167 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Fonts: self-hosted from /public/fonts.
+   IBM Plex Sans Thai = body (covers Thai + Latin glyphs in one family).
+   Cormorant Garamond = editorial display headlines.
+   Self-hosted for: 1) reliable Thai rendering 2) PDPA-friendly (no third-party calls). */
+
+@font-face {
+  font-family: 'IBM Plex Sans Thai';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('/fonts/IBMPlexSansThai-Light.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'IBM Plex Sans Thai';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/IBMPlexSansThai-Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'IBM Plex Sans Thai';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/IBMPlexSansThai-Medium.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'IBM Plex Sans Thai';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/IBMPlexSansThai-SemiBold.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'IBM Plex Sans Thai';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/IBMPlexSansThai-Bold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/CormorantGaramond-Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/CormorantGaramond-Italic.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/CormorantGaramond-Medium.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: italic;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/CormorantGaramond-MediumItalic.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/CormorantGaramond-SemiBold.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/CormorantGaramond-Bold.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/CormorantGaramond-BoldItalic.ttf') format('truetype');
+}
+
+@layer base {
+  :root {
+    --color-bg: theme('colors.cream');
+    --color-fg: theme('colors.ink');
+    --color-muted: theme('colors.stone.600');
+    --color-rule: theme('colors.stone.200');
+    --color-brand: theme('colors.teal.600');
+    --color-accent: theme('colors.gold.500');
+    --measure: 38rem;
+  }
+
+  /* Explicit font-family on html ensures TH glyphs use IBM Plex Sans Thai
+     even before Tailwind's font-sans utility resolves. Fallbacks keep TH
+     readable if the @font-face load fails. */
+  html {
+    font-family: 'IBM Plex Sans Thai', 'Sarabun', 'Noto Sans Thai',
+                 -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    scroll-behavior: smooth;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-cream text-ink antialiased;
+    font-feature-settings: 'kern', 'liga', 'calt';
+  }
+
+  /* Editorial display headlines lean into Cormorant for elegance */
+  h1, h2, h3 {
+    @apply font-display tracking-tight;
+    font-feature-settings: 'kern', 'liga', 'dlig';
+  }
+
+  h4, h5, h6 {
+    @apply font-sans;
+  }
+
+  a {
+    @apply transition-colors;
+  }
+
+  ::selection {
+    @apply bg-teal-600 text-cream;
+  }
+
+  /* Generous prose for editorial feel */
+  .prose-editorial {
+    @apply max-w-prose-narrow text-stone-800 leading-relaxed;
+  }
+  .prose-editorial p { @apply my-5 text-[1.0625rem]; }
+  .prose-editorial h2 { @apply mt-12 mb-4 text-display-md; }
+  .prose-editorial h3 { @apply mt-8 mb-3 text-2xl font-medium; }
+  .prose-editorial a { @apply text-teal-700 underline underline-offset-4 decoration-teal-600/30 hover:decoration-teal-600; }
+  .prose-editorial ul { @apply my-5 pl-5 list-disc marker:text-teal-600/50; }
+  .prose-editorial ul li { @apply my-2; }
+  .prose-editorial blockquote { @apply my-8 pl-6 border-l-2 border-gold-500 italic text-stone-600 font-display text-xl; }
+}
+
+@layer components {
+  .container-narrow { @apply mx-auto max-w-prose-narrow px-6; }
+  .container-wide   { @apply mx-auto max-w-prose-wide px-6; }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3
+           rounded-full font-medium tracking-wide transition;
+  }
+  .btn-primary { @apply btn bg-teal-600 text-cream hover:bg-teal-700; }
+  .btn-ghost   { @apply btn border border-stone-200 text-ink hover:border-teal-600 hover:text-teal-700; }
+
+  .rule { @apply border-t border-stone-200; }
+}

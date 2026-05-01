@@ -1,0 +1,48 @@
+---
+import Layout from '@layouts/Layout.astro';
+import { SITE } from '@lib/site';
+
+const locale = 'th' as const;
+const product = Astro.url.searchParams.get('product') ?? '';
+---
+<Layout
+  title="ขอบคุณ — ฟีนจะติดต่อกลับใน 1 วันทำการ"
+  description="ฟอร์มของคุณส่งสำเร็จแล้ว ฟีนจะติดต่อกลับภายใน 1 วันทำการ"
+  locale={locale}
+  noindex
+>
+  <section class="container-wide py-section">
+    <div class="max-w-2xl mx-auto text-center">
+      <p class="font-display text-7xl text-gold-500 mb-6">✓</p>
+      <h1 class="font-display text-display-lg text-ink mb-6 leading-[1.05]">
+        ขอบคุณค่ะ —<br/>
+        <span class="italic">ฟีนได้รับข้อความแล้ว</span>
+      </h1>
+      <p class="text-lg text-stone-600 leading-relaxed mb-12">
+        ฟีนจะติดต่อกลับภายใน 1 วันทำการ พร้อมใบเสนอราคาที่แม่นยำสำหรับโปรไฟล์คุณ —
+        ในระหว่างนี้ ลองดูเนื้อหาที่เลือกไว้ให้ด้านล่าง
+      </p>
+
+      <div class="grid sm:grid-cols-3 gap-4 text-left">
+        {product && (
+          <a href={`/products/${product}`} class="rounded-2xl bg-stone-100 p-6 ring-1 ring-stone-200 hover:ring-teal-600/50 transition">
+            <p class="text-xs uppercase tracking-widest text-teal-700 mb-2">แผนที่คุณสนใจ</p>
+            <p class="font-medium text-ink">กลับไปดูรายละเอียด →</p>
+          </a>
+        )}
+        <a href="/blog" class="rounded-2xl bg-stone-100 p-6 ring-1 ring-stone-200 hover:ring-teal-600/50 transition">
+          <p class="text-xs uppercase tracking-widest text-teal-700 mb-2">บทความ</p>
+          <p class="font-medium text-ink">อ่านไกด์ HNW →</p>
+        </a>
+        <a href={SITE.contact.line.deepLink} class="rounded-2xl bg-teal-600 p-6 text-cream hover:bg-teal-700 transition">
+          <p class="text-xs uppercase tracking-widest text-cream/70 mb-2">เร่งด่วน?</p>
+          <p class="font-medium">ทักฟีนทาง LINE →</p>
+        </a>
+      </div>
+
+      <p class="mt-16 text-xs text-stone-400">
+        คำขอของคุณบันทึกที่ {new Date().toLocaleString('th-TH')}
+      </p>
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,108 @@
+---
+import Layout from '@layouts/Layout.astro';
+import LineCTA from '@components/LineCTA.astro';
+import { SITE } from '@lib/site';
+
+const locale = 'th' as const;
+
+const contactSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ContactPage',
+  url: `${SITE.url}/contact`,
+  about: { '@id': `${SITE.url}/#agency` },
+};
+---
+<Layout
+  title="ติดต่อฟีน | ปรึกษาฟรีทาง LINE — feeninsure"
+  description={`ติดต่อ ฟีน — ${SITE.agent.nameTh} ตัวแทน Allianz Ayudhya ทาง LINE @feeninsure หรือโทร ${SITE.contact.phoneDisplay} ปรึกษาฟรี ไม่กดดัน`}
+  locale={locale}
+  jsonLd={contactSchema}
+>
+  <section class="container-wide py-section grid lg:grid-cols-2 gap-16">
+    <div>
+      <p class="text-xs uppercase tracking-[0.2em] text-teal-700 mb-6">ติดต่อ</p>
+      <h1 class="text-display-xl font-display text-ink leading-[1.05] mb-8">
+        คุยกันได้ทุกเรื่อง<br/>
+        <span class="italic text-teal-700">ทาง LINE</span>
+      </h1>
+      <p class="text-lg text-stone-600 leading-relaxed max-w-prose-narrow mb-12">
+        ขอเริ่มจากการคุยสบายๆ ก่อน — ไม่ต้องเตรียมเอกสาร ไม่ต้องลงทะเบียน
+        แค่บอกว่าคุณกำลังกังวลอะไร แล้วฟีนจะแนะนำต่อให้
+      </p>
+
+      <div class="space-y-4 mb-10">
+        <LineCTA locale={locale} context="หน้า Contact" />
+        <p class="text-sm text-stone-500">
+          หรือโทร <a href={`tel:+66${SITE.contact.phone.replace(/^0/, '')}`} class="text-teal-700 underline underline-offset-4">{SITE.contact.phoneDisplay}</a>
+          (จันทร์–เสาร์ 9:00–20:00)
+        </p>
+      </div>
+
+      <dl class="grid grid-cols-2 gap-y-6 gap-x-8 text-sm border-t border-stone-200 pt-8">
+        <div>
+          <dt class="text-xs uppercase tracking-widest text-stone-400 mb-1">LINE</dt>
+          <dd class="font-medium">{SITE.contact.line.id}</dd>
+        </div>
+        <div>
+          <dt class="text-xs uppercase tracking-widest text-stone-400 mb-1">Phone</dt>
+          <dd class="font-medium">{SITE.contact.phoneDisplay}</dd>
+        </div>
+        <div>
+          <dt class="text-xs uppercase tracking-widest text-stone-400 mb-1">พื้นที่ให้บริการ</dt>
+          <dd class="font-medium">ทั่วประเทศไทย (เน้น Bangkok metro)</dd>
+        </div>
+        <div>
+          <dt class="text-xs uppercase tracking-widest text-stone-400 mb-1">ภาษา</dt>
+          <dd class="font-medium">ไทย · อังกฤษ</dd>
+        </div>
+      </dl>
+    </div>
+
+    <aside>
+      <form
+        class="rounded-3xl bg-stone-100 p-8 ring-1 ring-stone-200"
+        method="post"
+        action="https://formspree.io/f/REPLACE_WITH_FORM_ID"
+      >
+        <h2 class="font-display text-2xl text-ink mb-2">หรือส่งข้อความไว้</h2>
+        <p class="text-sm text-stone-500 mb-6">ฟีนจะตอบกลับใน 1 วันทำการ</p>
+
+        <label class="block mb-4">
+          <span class="block text-xs uppercase tracking-widest text-stone-500 mb-2">ชื่อ</span>
+          <input name="name" required class="w-full rounded-lg border border-stone-200 bg-cream px-4 py-3 focus:outline-none focus:border-teal-600" />
+        </label>
+
+        <label class="block mb-4">
+          <span class="block text-xs uppercase tracking-widest text-stone-500 mb-2">LINE ID หรือเบอร์โทร</span>
+          <input name="contact" required class="w-full rounded-lg border border-stone-200 bg-cream px-4 py-3 focus:outline-none focus:border-teal-600" />
+        </label>
+
+        <label class="block mb-4">
+          <span class="block text-xs uppercase tracking-widest text-stone-500 mb-2">สนใจแผนใด</span>
+          <select name="interest" class="w-full rounded-lg border border-stone-200 bg-cream px-4 py-3 focus:outline-none focus:border-teal-600">
+            <option value="">— เลือก —</option>
+            <option>ประกันสุขภาพ HNW (First Class Ultra)</option>
+            <option>ประกันโรคร้ายแรง (Double Care / Multi Care)</option>
+            <option>ประกันออม / Unit Link</option>
+            <option>ประกันบำนาญ / ลดหย่อนภาษี</option>
+            <option>ประกันมรดก / Wealth Legacy</option>
+            <option>ยังไม่แน่ใจ — อยากปรึกษาก่อน</option>
+          </select>
+        </label>
+
+        <label class="block mb-6">
+          <span class="block text-xs uppercase tracking-widest text-stone-500 mb-2">ข้อความ (ถ้ามี)</span>
+          <textarea name="message" rows="4" class="w-full rounded-lg border border-stone-200 bg-cream px-4 py-3 focus:outline-none focus:border-teal-600"></textarea>
+        </label>
+
+        <input type="hidden" name="_subject" value="feeninsure.com — Contact form lead" />
+
+        <button class="btn-primary w-full">ส่งข้อความ</button>
+        <p class="mt-4 text-xs text-stone-500 leading-relaxed">
+          การส่งฟอร์มนี้ ถือว่าคุณยินยอมให้ฟีนติดต่อกลับ ตามนโยบาย PDPA
+          ข้อมูลของคุณจะไม่ถูกแชร์ให้บุคคลภายนอก
+        </p>
+      </form>
+    </aside>
+  </section>
+</Layout>

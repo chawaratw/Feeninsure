@@ -1,0 +1,314 @@
+---
+// Static page (SSG). Personalization happens client-side via inline JS reading
+// window.location.search. This avoids needing a server adapter — works on any
+// CDN (Cloudflare Pages free tier).
+import Layout from '@layouts/Layout.astro';
+import LineCTA from '@components/LineCTA.astro';
+import QuoteForm from '@components/QuoteForm.astro';
+import { getCollection } from 'astro:content';
+
+const locale = 'th' as const;
+
+// Embed all product data as JSON for the client to render with
+const allProducts = await getCollection('products');
+const productData = allProducts.map((p) => ({
+  slug: p.slug,
+  nameTh: p.data.nameTh,
+  taglineTh: p.data.taglineTh,
+  audienceTh: p.data.audienceTh,
+  coverageTh: p.data.coverageTh,
+  allianzUrl: p.data.allianzUrl ?? '',
+}));
+---
+<Layout
+  title="ผลการค้นหาแผน — feeninsure"
+  description="แผนประกัน Allianz Ayudhya ที่แนะนำสำหรับโปรไฟล์ของคุณ"
+  locale={locale}
+  noindex
+>
+  {/* Hero — generic; JS swaps the photo based on quiz concern */}
+  <section id="result-hero" class="relative h-[50vh] min-h-[380px] max-h-[560px] overflow-hidden -mt-[1px]">
+    <img id="hero-img" src="/images/lifestyle/sailor.jpg" alt="ผลการค้นหาแผน" class="absolute inset-0 h-full w-full object-cover" />
+    <div class="absolute inset-0 bg-gradient-to-b from-ink/30 via-ink/40 to-ink/80"></div>
+    <div class="relative h-full container-wide flex flex-col justify-end pb-12 text-cream">
+      <p class="text-xs uppercase tracking-[0.3em] mb-4 opacity-80">Find My Plan · ผลลัพธ์</p>
+      <h1 class="font-display text-[clamp(2rem,5vw,4rem)] leading-[1] max-w-3xl">
+        แผนที่ใช่ <span class="italic">สำหรับคุณ</span>
+      </h1>
+    </div>
+  </section>
+
+  {/* Quiz answer recap — populated by JS */}
+  <section class="border-b border-stone-200 bg-cream">
+    <div class="container-wide py-8 grid sm:grid-cols-2 lg:grid-cols-5 gap-6 text-sm" id="recap">
+      <div><dt class="text-xs uppercase tracking-widest text-stone-400 mb-1">ทำเพื่อ</dt><dd class="font-medium text-ink" id="r-for">—</dd></div>
+      <div><dt class="text-xs uppercase tracking-widest text-stone-400 mb-1">เป้าหมาย</dt><dd class="font-medium text-ink" id="r-concern">—</dd></div>
+      <div><dt class="text-xs uppercase tracking-widest text-stone-400 mb-1">อายุ</dt><dd class="font-medium text-ink" id="r-age">—</dd></div>
+      <div><dt class="text-xs uppercase tracking-widest text-stone-400 mb-1">งบ</dt><dd class="font-medium text-ink" id="r-budget">—</dd></div>
+      <div><dt class="text-xs uppercase tracking-widest text-stone-400 mb-1">โรงพยาบาล</dt><dd class="font-medium text-ink" id="r-hospital">—</dd></div>
+    </div>
+    <div class="container-wide pb-6">
+      <a href="/find-my-plan" class="text-xs uppercase tracking-widest text-teal-700 hover:text-teal-900">← แก้ไขคำตอบ</a>
+    </div>
+  </section>
+
+  {/* Recommendations — placeholder containers; JS populates */}
+  <section class="container-wide py-section">
+    <header class="mb-12 max-w-prose-narrow">
+      <p class="text-xs uppercase tracking-[0.3em] text-teal-700 mb-4" id="rec-count">ฟีนแนะนำ</p>
+      <h2 class="font-display text-display-md text-ink leading-[1.05]">
+        จากคำตอบของคุณ — <span class="italic">นี่คือแผนที่ใช่</span>
+      </h2>
+    </header>
+    <div id="recs" class="space-y-8">
+      {/* JS injects ProductCards-like markup here */}
+      <p class="text-stone-500 text-center py-12">กำลังประมวลผล...</p>
+    </div>
+
+    <noscript>
+      <p class="mt-12 text-center text-stone-700">
+        ต้องเปิด JavaScript เพื่อดูแผนที่แนะนำ —
+        หรือ <a href="/products" class="text-teal-700 underline">ดูแผนทั้ง 8</a> ·
+        <a href="#consult" class="text-teal-700 underline">ปรึกษาฟีนทาง LINE</a>
+      </p>
+    </noscript>
+  </section>
+
+  {/* Lead capture — quiz answers go in via JS hidden fields */}
+  <section id="consult" class="bg-stone-100/60 py-section">
+    <div class="container-wide grid lg:grid-cols-12 gap-10">
+      <div class="lg:col-span-5">
+        <p class="text-xs uppercase tracking-[0.3em] text-teal-700 mb-4">ขั้นตอนถัดไป</p>
+        <h2 class="font-display text-display-md text-ink mb-6 leading-[1.05]">
+          ขอใบเสนอราคา<br/>
+          <span class="italic">ที่แม่นยำ</span>
+        </h2>
+        <p class="text-stone-600 leading-relaxed max-w-prose-narrow mb-8">
+          ฟีนใช้คำตอบจากแบบสอบถามของคุณ + ข้อมูลในฟอร์ม ทำใบเสนอราคาที่ตรงกับโปรไฟล์
+          ส่งกลับให้ใน 1 วันทำการ — ใส่อีเมลเพิ่มถ้าอยากได้สรุปเป็น PDF
+        </p>
+        <div class="flex flex-col gap-3 mb-8">
+          <LineCTA
+            locale={locale}
+            context="Find My Plan result"
+            variant="ghost"
+            label="หรือทักฟีนทาง LINE ทันที"
+          />
+        </div>
+      </div>
+      <div class="lg:col-span-7">
+        <QuoteForm
+          locale={locale}
+          source="find-my-plan"
+          hiddenContext={{ quiz_recommendations: '' /* JS fills via DOM */ }}
+          heading="ส่งคำขอ + รับ PDF สรุป"
+          subheading="ฟีนติดต่อกลับใน 1 วันทำการ • ถ้าใส่อีเมล จะได้ PDF สรุปด้วย"
+        />
+      </div>
+    </div>
+  </section>
+
+  {/* All product data + recommendation logic + DOM update */}
+  <script type="application/json" id="product-data" set:html={JSON.stringify(productData)} />
+  <script is:inline>
+    (function () {
+      // Recommendation engine (port of src/lib/find-plan.ts to inline JS)
+      const CONCERN_SCORES = {
+        'comprehensive-health': { 'first-class-ultra-bdms': 5, 'first-class-ultra': 5, 'double-care': 4, 'superior-health': 3, 'multi-care': 2 },
+        'critical-illness':     { 'double-care': 5, 'multi-care': 5, 'first-class-ultra': 3, 'first-class-ultra-bdms': 3 },
+        'retirement':           { 'my-pension-five': 5, 'my-style-wealth-ultra': 3, 'my-wealth-legacy': 2 },
+        'tax-deduction':        { 'my-pension-five': 5, 'my-style-wealth-ultra': 4, 'my-wealth-legacy': 3, 'double-care': 2 },
+        'wealth-building':      { 'my-style-wealth-ultra': 5, 'my-wealth-legacy': 4, 'my-pension-five': 3 },
+        'legacy':               { 'my-wealth-legacy': 5, 'my-style-wealth-ultra': 3 },
+      };
+      const HOSPITAL_MODS = {
+        'bdms':           { 'first-class-ultra-bdms': +2, 'first-class-ultra': -1 },
+        'any-thai':       { 'first-class-ultra': +2, 'first-class-ultra-bdms': -1 },
+        'worldwide':      { 'superior-health': +3, 'first-class-ultra-bdms': +1 },
+        'not-applicable': {},
+      };
+      const BUDGET_ALLOW = {
+        'under-50k':   ['multi-care'],
+        '50k-150k':    ['multi-care', 'double-care', 'my-pension-five'],
+        '150k-500k':   ['multi-care', 'double-care', 'first-class-ultra', 'first-class-ultra-bdms', 'my-pension-five', 'superior-health', 'my-wealth-legacy'],
+        'over-500k':   ['first-class-ultra', 'first-class-ultra-bdms', 'my-style-wealth-ultra', 'my-wealth-legacy', 'superior-health', 'my-pension-five'],
+      };
+      const AGE_MODS = {
+        'under-25': { 'multi-care': +1, 'double-care': +1, 'my-style-wealth-ultra': +1 },
+        '25-34':    { 'double-care': +1, 'first-class-ultra': +1, 'my-style-wealth-ultra': +1 },
+        '35-44':    { 'double-care': +1, 'first-class-ultra-bdms': +1, 'my-pension-five': +1 },
+        '45-54':    { 'my-pension-five': +2, 'my-wealth-legacy': +1, 'first-class-ultra-bdms': +1 },
+        '55-plus':  { 'my-wealth-legacy': +2, 'first-class-ultra-bdms': +1, 'multi-care': -1 },
+      };
+      const REASONING = {
+        'comprehensive-health|first-class-ultra-bdms': 'แผน @BDMS เน้นเครือ Bumrungrad / BNH / Samitivej — เหมาะถ้าคุณใช้โรงพยาบาลในเครือนี้เป็นหลัก',
+        'comprehensive-health|first-class-ultra': 'แผน Ultra ใช้ได้ทุกโรงพยาบาล — ความยืดหยุ่นสูงสุด',
+        'comprehensive-health|double-care': 'ครอบคลุมสุขภาพระดับสูง + ปลดล็อค 2 เท่าเมื่อโรคร้าย',
+        'comprehensive-health|superior-health': 'คุ้มครองทั่วโลก เหมาะถ้าเดินทางต่างประเทศบ่อย',
+        'critical-illness|double-care': 'แผนสุขภาพ + วงเงินเพิ่ม 2 เท่าทันทีเมื่อตรวจพบมะเร็ง หัวใจ หรือสมอง',
+        'critical-illness|multi-care': 'จ่ายเงินก้อนเมื่อตรวจพบ 81 โรคร้าย — เคลมซ้ำได้ ครอบคลุมค่าใช้จ่ายที่ประกันสุขภาพไม่จ่าย',
+        'critical-illness|first-class-ultra': 'คุ้มครองค่ารักษาโรคร้ายระยะยาวด้วยวงเงินสูง',
+        'retirement|my-pension-five': 'จ่ายเบี้ย 5 ปี รับเงินบำนาญตลอดชีพ + ลดหย่อนภาษีเพิ่ม ฿200K/ปี',
+        'retirement|my-style-wealth-ultra': 'ลงทุนระยะยาวผ่าน Unit Link — ผลตอบแทนตามตลาด + คุ้มครองชีวิต',
+        'tax-deduction|my-pension-five': 'ลดหย่อนได้สูงสุด ฿200K/ปี — ฐานภาษี 30% = ประหยัด ฿60K/ปี',
+        'tax-deduction|my-style-wealth-ultra': 'ลดหย่อนภาษีในส่วนคุ้มครองชีวิต + ลงทุนระยะยาว',
+        'wealth-building|my-style-wealth-ultra': 'Unit Link — เลือกพอร์ตได้ ปรับสมดุลได้ ผลตอบแทนระยะยาวสูง',
+        'wealth-building|my-wealth-legacy': 'จ่ายเบี้ย 6 ปี สร้างทุนคุ้มครองชีวิตยาวถึง 99 ปี + เงินปันผล',
+        'legacy|my-wealth-legacy': 'ออกแบบมาเฉพาะสำหรับการส่งต่อทรัพย์สินให้รุ่นถัดไป',
+        'legacy|my-style-wealth-ultra': 'รวม Wealth + Protection ในกรมธรรม์เดียว ส่งต่อพอร์ตให้ทายาทได้',
+      };
+
+      const FOR_LABEL = { 'self': 'ตัวเอง', 'spouse': 'คู่ชีวิต', 'children': 'ลูก', 'parents': 'พ่อแม่', 'family': 'ทั้งครอบครัว' };
+      const CONCERN_LABEL = {
+        'comprehensive-health': 'สุขภาพครบถ้วน', 'critical-illness': 'โรคร้ายแรง',
+        'retirement': 'วางแผนเกษียณ', 'tax-deduction': 'ลดหย่อนภาษี',
+        'wealth-building': 'สร้างทรัพย์สิน', 'legacy': 'ส่งต่อมรดก',
+      };
+      const AGE_LABEL = { 'under-25':'< 25 ปี', '25-34':'25-34 ปี', '35-44':'35-44 ปี', '45-54':'45-54 ปี', '55-plus':'55+ ปี' };
+      const BUDGET_LABEL = { 'under-50k':'< ฿50K/ปี', '50k-150k':'฿50–150K/ปี', '150k-500k':'฿150–500K/ปี', 'over-500k':'> ฿500K/ปี' };
+      const HOSPITAL_LABEL = { 'bdms':'เครือ BDMS', 'any-thai':'ทั่วประเทศ', 'worldwide':'ต่างประเทศบ่อย', 'not-applicable':'—' };
+      const HERO_PHOTOS = {
+        'comprehensive-health': '/images/lifestyle/sailor.jpg',
+        'critical-illness': '/images/lifestyle/friends-sunset.jpg',
+        'retirement': '/images/lifestyle/car-countryside.jpg',
+        'tax-deduction': '/images/lifestyle/couple-cadillac.jpg',
+        'wealth-building': '/images/lifestyle/boat-sunset.jpg',
+        'legacy': '/images/lifestyle/couple-cadillac.jpg',
+      };
+      const ITEM_PHOTOS = ['boat-sunset', 'sailor', 'friends-sunset', 'couple-cadillac', 'car-countryside', 'seaside-friends'];
+
+      function recommend(inputs) {
+        const base = CONCERN_SCORES[inputs.concern] || {};
+        const ageMod = AGE_MODS[inputs.age] || {};
+        const hospMod = inputs.hospital ? (HOSPITAL_MODS[inputs.hospital] || {}) : {};
+        const budgetSet = new Set(BUDGET_ALLOW[inputs.budget] || []);
+        const candidates = new Set([...Object.keys(base), ...Object.keys(ageMod), ...Object.keys(hospMod)]);
+        let scored = [...candidates]
+          .filter(s => budgetSet.has(s))
+          .map(s => ({
+            slug: s,
+            score: (base[s] || 0) + (ageMod[s] || 0) + (hospMod[s] || 0),
+            reasoning: REASONING[inputs.concern + '|' + s] || 'ตรงกับโปรไฟล์ของคุณ'
+          }))
+          .filter(r => r.score > 0)
+          .sort((a, b) => b.score - a.score)
+          .slice(0, 3);
+        if (scored.length === 0) {
+          scored = Object.entries(base).sort((a, b) => b[1] - a[1]).slice(0, 1).map(([s, sc]) => ({
+            slug: s, score: sc,
+            reasoning: (REASONING[inputs.concern + '|' + s] || 'ตรงกับโปรไฟล์ของคุณ') + ' (อยู่นอก budget — แนะนำให้พิจารณา)',
+          }));
+        }
+        return scored;
+      }
+
+      const params = new URLSearchParams(window.location.search);
+      const inputs = {
+        forWhom: params.get('for') || 'self',
+        concern: params.get('concern') || 'comprehensive-health',
+        age:     params.get('age') || '35-44',
+        budget:  params.get('budget') || '50k-150k',
+        hospital: params.get('hospital') || 'not-applicable',
+      };
+
+      // If essentials missing, send back
+      if (!params.has('for') || !params.has('concern') || !params.has('budget')) {
+        window.location.replace('/find-my-plan');
+        return;
+      }
+
+      // Update recap
+      document.getElementById('r-for').textContent = FOR_LABEL[inputs.forWhom] || '—';
+      document.getElementById('r-concern').textContent = CONCERN_LABEL[inputs.concern] || '—';
+      document.getElementById('r-age').textContent = AGE_LABEL[inputs.age] || '—';
+      document.getElementById('r-budget').textContent = BUDGET_LABEL[inputs.budget] || '—';
+      document.getElementById('r-hospital').textContent = HOSPITAL_LABEL[inputs.hospital] || '—';
+      document.getElementById('hero-img').src = HERO_PHOTOS[inputs.concern] || '/images/lifestyle/sailor.jpg';
+
+      // Run recommendations
+      const recs = recommend(inputs);
+      document.getElementById('rec-count').textContent = `ฟีนแนะนำ · ${recs.length} แผน`;
+
+      const products = JSON.parse(document.getElementById('product-data').textContent);
+      const productMap = Object.fromEntries(products.map(p => [p.slug, p]));
+
+      function escapeHtml(s) { return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+      const recsHtml = recs.map((r, i) => {
+        const p = productMap[r.slug];
+        if (!p) return '';
+        const img = '/images/lifestyle/' + ITEM_PHOTOS[i % ITEM_PHOTOS.length] + '.jpg';
+        const allianzBtn = p.allianzUrl
+          ? `<a href="${escapeHtml(p.allianzUrl)}" target="_blank" rel="noopener noreferrer" class="btn-ghost text-sm">Allianz ทางการ ↗</a>`
+          : '';
+        return `
+          <article class="grid lg:grid-cols-12 gap-8 rounded-3xl bg-stone-100 ring-1 ring-stone-200 overflow-hidden hover:ring-teal-600/40 transition">
+            <figure class="lg:col-span-5 relative aspect-[4/3] lg:aspect-auto">
+              <img src="${img}" alt="" class="absolute inset-0 h-full w-full object-cover" loading="lazy" />
+              <span class="absolute top-4 left-4 inline-block text-[10px] uppercase tracking-widest text-cream bg-ink/40 backdrop-blur px-3 py-1.5 rounded-full">
+                ลำดับที่ ${i + 1}
+              </span>
+            </figure>
+            <div class="lg:col-span-7 p-8 lg:p-10">
+              <h3 class="font-display text-3xl text-ink mb-2">${escapeHtml(p.nameTh)}</h3>
+              <p class="text-stone-500 italic mb-5 text-sm">${escapeHtml(p.taglineTh)}</p>
+              <p class="text-stone-700 leading-relaxed mb-6">
+                <span class="font-medium text-ink">ทำไมแผนนี้:</span> ${escapeHtml(r.reasoning)}
+              </p>
+              <dl class="grid grid-cols-2 gap-4 mb-8 text-sm">
+                <div>
+                  <dt class="text-xs uppercase tracking-widest text-stone-400 mb-1">วงเงิน</dt>
+                  <dd class="font-medium text-ink">${escapeHtml(p.coverageTh)}</dd>
+                </div>
+                <div>
+                  <dt class="text-xs uppercase tracking-widest text-stone-400 mb-1">เหมาะกับ</dt>
+                  <dd class="font-medium text-ink text-xs">${escapeHtml(p.audienceTh)}</dd>
+                </div>
+              </dl>
+              <div class="flex flex-wrap gap-3">
+                <a href="/products/${escapeHtml(p.slug)}" class="btn-primary text-sm">ดูรายละเอียดแผน →</a>
+                ${allianzBtn}
+              </div>
+            </div>
+          </article>
+        `;
+      }).join('');
+      document.getElementById('recs').innerHTML = recsHtml || '<p class="text-stone-600">ไม่พบแผนที่ตรง — ลองปรับคำตอบ หรือทักฟีนทาง LINE</p>';
+
+      // Inject quiz context into the form's hidden field
+      const form = document.querySelector('form[data-source="find-my-plan"]');
+      if (form) {
+        const ctx = {
+          quiz_for: inputs.forWhom,
+          quiz_concern: inputs.concern,
+          quiz_age: inputs.age,
+          quiz_budget: inputs.budget,
+          quiz_hospital: inputs.hospital,
+          quiz_recommendations: recs.map(r => r.slug).join(','),
+        };
+        Object.entries(ctx).forEach(([k, v]) => {
+          let el = form.querySelector(`input[name="${k}"]`);
+          if (!el) {
+            el = document.createElement('input');
+            el.type = 'hidden';
+            el.name = k;
+            form.appendChild(el);
+          }
+          el.value = v;
+        });
+        // Pre-fill product hidden fields with the top recommendation
+        if (recs[0]) {
+          const top = productMap[recs[0].slug];
+          const pSlug = form.querySelector('input[name="product_slug"]');
+          const pName = form.querySelector('input[name="product_name"]');
+          if (pSlug) pSlug.value = recs[0].slug; else {
+            const e = document.createElement('input'); e.type='hidden'; e.name='product_slug'; e.value=recs[0].slug; form.appendChild(e);
+          }
+          if (pName && top) pName.value = top.nameTh; else if (top) {
+            const e = document.createElement('input'); e.type='hidden'; e.name='product_name'; e.value=top.nameTh; form.appendChild(e);
+          }
+        }
+      }
+    })();
+  </script>
+</Layout>

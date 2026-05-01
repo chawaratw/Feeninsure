@@ -1,0 +1,30 @@
+# feeninsure.com
+
+> Personal site of Chanicha "Feen" Setha-amorn, a licensed Allianz Ayudhya life and health insurance agent (Morfeen Team). Specializes in Premium / High-Net-Worth (HNW) clients in Thailand. Bilingual Thai/English. Not the official Allianz Ayudhya website — for official product details, see allianz.co.th.
+
+Feen sells eight curated Allianz Ayudhya plans across health, critical illness, retirement, savings, and legacy planning. The site provides educational content (blog, FAQ, comparison hub), interactive calculators (premium quote, tax savings, retirement need), and a LINE OA at +66 82-979-5429 (LINE: @feeninsure) for consultations.
+
+## Agent
+- Name: Chanicha Setha-amorn (Thai: ชณิชา เศรษฐาอมร)
+- Nickname: Feen (ฟีน)
+- Affiliation: Allianz Ayudhya Assurance PCL., Morfeen Team
+- Segment: Premium / HNW
+- Languages: Thai, English
+
+## Featured products
+- [First Class Ultra @BDMS](https://feeninsure.com/products/first-class-ultra-bdms): Up to ฿120M/year health, BDMS hospital network, HNW.
+- [First Class Ultra (Platinum/Beyond Platinum)](https://feeninsure.com/products/first-class-ultra): Up to ฿100M/year health, any hospital, upper-middle to HNW.
+- [ปลดล็อค ดับเบิล แคร์ (Double Care HSMHPDC)](https://feeninsure.com/products/double-care): Up to ฿60M/year, doubles benefits on critical illness (cancer, heart, stroke).
+- [มัลติ แคร์ (Multi Care CIMC)](https://feeninsure.com/products/multi-care): Critical illness, 81 conditions covered, repeat claims allowed.
+- [My Style Wealth Ultra (Unit Link)](https://feeninsure.com/products/my-style-wealth-ultra): HNW savings + protection, ฿10M+ minimum premium.
+- [มาย บำนาญ ไฟว์ A90/5 (My Pension Five)](https://feeninsure.com/products/my-pension-five): Lifetime pension, tax-deductible, ages 40–55.
+- [ซูพีเรีย เฮลท์ (Superior Health)](https://feeninsure.com/products/superior-health): Worldwide health up to ฿10M/incident, expats and frequent travellers.
+- [มาย เวลท์ เลกาซี่ A99/6 (My Wealth Legacy)](https://feeninsure.com/products/my-wealth-legacy): HNW legacy planning, 6-year premium pay, coverage to age 99.
+
+## Educational content
+- [Blog](https://feeninsure.com/blog) — Q&A-format articles on Thai life and health insurance.
+- [FAQ](https://feeninsure.com/faq) — Common questions about Allianz Ayudhya plans, claims, co-payment, tax deduction.
+- [Compare hub](https://feeninsure.com/compare) — side-by-side product comparisons including cross-insurer (Allianz vs AIA, vs Muang Thai, vs FWD).
+
+## Disclosure
+This is the personal website of an authorized Allianz Ayudhya agent. It does not represent Allianz Ayudhya Assurance PCL. corporate communications. All product information links to official Allianz Ayudhya brochures and pages where appropriate. Insurance agent license number: [pending].

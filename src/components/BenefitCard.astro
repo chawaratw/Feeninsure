@@ -1,0 +1,19 @@
+---
+// Single benefit card — used 1-3× per product page.
+// Designed for low cognitive load: large icon, one-line headline, one-line body.
+interface Props {
+  icon: string;       // emoji or single-char glyph (replace with SVG asset if desired)
+  headline: string;
+  body: string;
+  accent?: 'teal' | 'gold';
+}
+const { icon, headline, body, accent = 'teal' } = Astro.props;
+const ring = accent === 'gold' ? 'ring-gold-500/30' : 'ring-teal-600/20';
+const dot  = accent === 'gold' ? 'bg-gold-500' : 'bg-teal-600';
+---
+<article class={`group relative rounded-2xl bg-cream ring-1 ${ring} p-8 transition hover:ring-teal-600/40`}>
+  <div class={`absolute -top-3 left-8 h-6 w-6 rounded-full ${dot}`} aria-hidden="true"></div>
+  <div class="text-4xl mb-4" aria-hidden="true">{icon}</div>
+  <h3 class="text-xl font-medium text-ink mb-2">{headline}</h3>
+  <p class="text-stone-600 leading-relaxed text-[0.95rem]">{body}</p>
+</article>

@@ -1,0 +1,75 @@
+---
+import Layout from '@layouts/Layout.astro';
+import LineCTA from '@components/LineCTA.astro';
+const locale = 'th' as const;
+---
+<Layout
+  title="คำนวณเงินเกษียณที่ต้องเตรียม — feeninsure"
+  description="คำนวณว่าต้องเตรียมเงินเท่าไหร่เพื่อเกษียณอย่างสบาย — ใช้สูตร 4% rule ปรับด้วยเงินเฟ้อไทย"
+  locale={locale}
+>
+  <section class="container-wide py-section">
+    <header class="mb-12 max-w-prose-narrow">
+      <p class="text-xs uppercase tracking-[0.2em] text-teal-700 mb-6">เครื่องคำนวณ · เกษียณ</p>
+      <h1 class="text-display-lg font-display text-ink mb-6">เงินเกษียณที่ต้องเตรียม</h1>
+      <p class="text-stone-600 leading-relaxed">
+        คำนวณจาก <em>4% rule</em> ปรับด้วยเงินเฟ้อไทย — ตัวเลขสำหรับ "ใช้แบบสบายโดยไม่กินทุน"
+      </p>
+    </header>
+
+    <div class="grid lg:grid-cols-5 gap-10 max-w-5xl">
+      <form id="ret-form" class="lg:col-span-3 rounded-3xl bg-stone-100 p-8 ring-1 ring-stone-200 space-y-6">
+        <label class="block">
+          <span class="block text-xs uppercase tracking-widest text-stone-500 mb-2">อายุปัจจุบัน</span>
+          <input id="ageNow" type="number" min="20" max="60" value="40" class="w-full rounded-lg border border-stone-200 bg-cream px-4 py-3 focus:outline-none focus:border-teal-600" />
+        </label>
+        <label class="block">
+          <span class="block text-xs uppercase tracking-widest text-stone-500 mb-2">เริ่มเกษียณตอนอายุ</span>
+          <input id="retAge" type="number" min="50" max="70" value="60" class="w-full rounded-lg border border-stone-200 bg-cream px-4 py-3 focus:outline-none focus:border-teal-600" />
+        </label>
+        <label class="block">
+          <span class="block text-xs uppercase tracking-widest text-stone-500 mb-2">ค่าใช้จ่าย/เดือนตอนเกษียณ (฿ ปัจจุบัน)</span>
+          <input id="spend" type="number" min="10000" step="5000" value="80000" class="w-full rounded-lg border border-stone-200 bg-cream px-4 py-3 focus:outline-none focus:border-teal-600" />
+        </label>
+        <label class="block">
+          <span class="block text-xs uppercase tracking-widest text-stone-500 mb-2">เงินเฟ้อที่คาด (% ต่อปี)</span>
+          <input id="inflation" type="number" min="0" max="10" step="0.1" value="3" class="w-full rounded-lg border border-stone-200 bg-cream px-4 py-3 focus:outline-none focus:border-teal-600" />
+        </label>
+      </form>
+
+      <aside class="lg:col-span-2">
+        <div class="sticky top-24 rounded-3xl bg-teal-600 text-cream p-8">
+          <p class="text-xs uppercase tracking-widest text-cream/70 mb-3">ทุนสุทธิที่ต้องเตรียม</p>
+          <p class="font-display text-display-lg leading-none mb-2"><span id="result">฿—</span></p>
+          <ul id="detail" class="text-xs text-cream/80 space-y-1 mb-6"></ul>
+          <LineCTA locale={locale} context="วางแผนเกษียณ" label="วางแผนกับฟีน" class="w-full" />
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <script is:inline>
+    (function () {
+      const fmt = (n) => '฿' + Math.round(n).toLocaleString('en-US');
+      function compute() {
+        const ageNow = +document.getElementById('ageNow').value;
+        const retAge = +document.getElementById('retAge').value;
+        const spend = +document.getElementById('spend').value;
+        const inf = +document.getElementById('inflation').value / 100;
+        const yearsToRet = Math.max(retAge - ageNow, 0);
+        const annualSpendNow = spend * 12;
+        const annualSpendAtRet = annualSpendNow * Math.pow(1 + inf, yearsToRet);
+        // 4% rule: capital = annual spending × 25
+        const capital = annualSpendAtRet * 25;
+        document.getElementById('result').textContent = fmt(capital);
+        document.getElementById('detail').innerHTML =
+          '<li>ค่าใช้จ่าย/ปี (ปัจจุบัน): ' + fmt(annualSpendNow) + '</li>' +
+          '<li>ค่าใช้จ่าย/ปี (ตอนเกษียณ): ' + fmt(annualSpendAtRet) + '</li>' +
+          '<li>ระยะเวลาเหลือ: ' + yearsToRet + ' ปี</li>' +
+          '<li class="pt-2 border-t border-cream/20 mt-2">สูตร 4% rule: ทุน × 4% = ค่าใช้จ่าย/ปี</li>';
+      }
+      document.getElementById('ret-form').addEventListener('input', compute);
+      compute();
+    })();
+  </script>
+</Layout>

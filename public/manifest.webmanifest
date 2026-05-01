@@ -1,0 +1,14 @@
+{
+  "name": "feeninsure | ฟีน ประกัน First Class",
+  "short_name": "feeninsure",
+  "description": "Allianz Ayudhya life & health insurance agent — Premium/HNW",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FAF8F4",
+  "theme_color": "#007B87",
+  "lang": "th-TH",
+  "icons": [
+    { "src": "/icons/icon-192.png", "type": "image/png", "sizes": "192x192" },
+    { "src": "/icons/icon-512.png", "type": "image/png", "sizes": "512x512", "purpose": "any maskable" }
+  ]
+}

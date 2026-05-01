@@ -1,0 +1,155 @@
+---
+import Layout from '@layouts/Layout.astro';
+import LineCTA from '@components/LineCTA.astro';
+import { SITE } from '@lib/site';
+
+const locale = 'th' as const;
+
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  '@id': `${SITE.url}/#feen`,
+  name: SITE.agent.nameEn,
+  alternateName: [SITE.agent.nameTh, SITE.agent.nickname, 'Feen'],
+  jobTitle: SITE.agent.titleEn,
+  worksFor: { '@type': 'Organization', name: SITE.agent.company, url: SITE.allianz.home },
+  affiliation: { '@type': 'Organization', name: SITE.agent.team },
+  url: `${SITE.url}/about`,
+  telephone: `+66${SITE.contact.phone.replace(/^0/, '')}`,
+  knowsLanguage: ['th', 'en'],
+  knowsAbout: [
+    'Real estate', 'Luxury property',
+    'High-net-worth insurance', 'Health insurance', 'Life insurance', 'Critical illness insurance',
+    'Unit-linked insurance', 'Retirement planning', 'Tax-deductible insurance',
+    'อสังหาริมทรัพย์ HNW', 'ประกันสุขภาพ', 'ประกันโรคร้ายแรง', 'วางแผนเกษียณ',
+  ],
+  sameAs: [SITE.social.facebook, SITE.social.instagram, SITE.social.tiktok, SITE.social.youtube],
+};
+---
+<Layout
+  title="เกี่ยวกับฟีน — ชณิชา เศรษฐาอมร | ตัวแทน Allianz Ayudhya HNW"
+  description="ฟีน — ชณิชา เศรษฐาอมร นายหน้าอสังหาริมทรัพย์ HNW มากว่า 5 ปี ตอนนี้คือตัวแทน Allianz Ayudhya ที่เข้าใจชีวิตและความต้องการของคนรายได้สูงทั้งสองด้าน — ทรัพย์สินและการคุ้มครอง"
+  locale={locale}
+  jsonLd={personSchema}
+>
+  {/* Editorial hero */}
+  <section class="container-wide pt-section pb-16 lg:pb-24">
+    <div class="grid lg:grid-cols-12 gap-12 items-end">
+      <div class="lg:col-span-7">
+        <p class="text-xs uppercase tracking-[0.3em] text-teal-700 mb-6">เกี่ยวกับฉัน</p>
+        <h1 class="font-display text-display-xl text-ink leading-[1] mb-8">
+          ฟีน —<br/>
+          ที่ปรึกษา<br/>
+          <span class="italic text-teal-700">สองด้าน</span>
+        </h1>
+        <p class="text-xl text-stone-600 leading-relaxed max-w-prose-narrow">
+          5 ปีในวงการอสังหาริมทรัพย์ระดับ HNW · 1 ใบอนุญาตตัวแทน Allianz Ayudhya ·
+          1 ที่ปรึกษาที่เข้าใจชีวิตคุณจริงๆ
+        </p>
+      </div>
+      <aside class="lg:col-span-5">
+        <dl class="grid grid-cols-2 gap-6 text-sm rounded-3xl bg-stone-100 p-8 ring-1 ring-stone-200">
+          <div>
+            <dt class="text-xs uppercase tracking-widest text-stone-400 mb-1">ประสบการณ์อสังหาฯ</dt>
+            <dd class="font-medium text-ink">5+ ปี</dd>
+          </div>
+          <div>
+            <dt class="text-xs uppercase tracking-widest text-stone-400 mb-1">บริษัทประกัน</dt>
+            <dd class="font-medium text-ink">{SITE.agent.company.replace(' Assurance PCL.', '')}</dd>
+          </div>
+          <div>
+            <dt class="text-xs uppercase tracking-widest text-stone-400 mb-1">ทีม</dt>
+            <dd class="font-medium text-ink">{SITE.agent.team}</dd>
+          </div>
+          <div>
+            <dt class="text-xs uppercase tracking-widest text-stone-400 mb-1">ภาษา</dt>
+            <dd class="font-medium text-ink">ไทย · อังกฤษ</dd>
+          </div>
+        </dl>
+      </aside>
+    </div>
+  </section>
+
+  {/* Editorial body */}
+  <section class="bg-stone-100/50">
+    <article class="container-narrow py-section prose-editorial mx-auto">
+
+      <h2>จุดเริ่มต้น — ในห้องคอนโดหรู</h2>
+      <p>
+        ฟีนเริ่มอาชีพในวงการ <strong>นายหน้าอสังหาริมทรัพย์ระดับ HNW</strong> มากว่า 5 ปี —
+        ดูแลลูกค้าระดับสูงในการซื้อ-ขาย-เช่า คอนโดหรู บ้านเดี่ยวหรู และอสังหาฯ เพื่อการลงทุน
+        ลูกค้าส่วนใหญ่มีรายได้และทรัพย์สินที่จัดอยู่ในกลุ่ม Premium ถึง HNW
+      </p>
+      <p>
+        ระหว่างที่ทำงานนั้น ฟีนเห็น pattern เดิมๆ — ลูกค้า HNW มักจะ <em>วางแผนทรัพย์สินอย่างละเอียด</em>
+        แต่ <em>วางแผนการคุ้มครองสุขภาพและชีวิตอย่างหละหลวม</em> หรือใช้แผนเดียวกับเมื่อ 10 ปีที่แล้ว
+        ที่ไม่ได้ปรับตามมูลค่าและไลฟ์สไตล์ปัจจุบัน
+      </p>
+
+      <h2>คำถามที่ทำให้เปลี่ยนเส้นทาง</h2>
+      <p>
+        ลูกค้าหลายคนถามคำถามเดียวกัน — <em>"ฟีน ประกันสุขภาพและประกันชีวิตที่เหมาะกับคนระดับเรา ควรทำที่ไหน? แบบไหน?"</em>
+      </p>
+      <p>
+        ตอนแรกฟีนแค่แนะนำเพื่อนตัวแทนที่รู้จัก แต่หลังจากเห็นว่าหลายแผนที่ลูกค้าได้รับ <em>ไม่ได้ตอบโจทย์</em> —
+        วงเงินไม่พอ, เครือโรงพยาบาลไม่ตรง, หรือเลือกแผนที่ตัวแทนได้ค่าคอมสูง ไม่ใช่แผนที่ลูกค้าได้คุ้มครองดีที่สุด —
+        ฟีนเลยตัดสินใจ <strong>รับใบอนุญาตตัวแทน Allianz Ayudhya</strong> เพื่อให้คำแนะนำเองได้อย่างมืออาชีพ
+      </p>
+
+      <h2>ทำไมเลือก Allianz Ayudhya</h2>
+      <p>
+        จากการศึกษาตลาดประกันหลายเจ้า ฟีนพบว่า Allianz Ayudhya มีจุดแข็งเฉพาะในกลุ่ม HNW:
+      </p>
+      <ul>
+        <li><strong>วงเงินสูงสุดในตลาดไทย</strong> — First Class Ultra Beyond Platinum ครอบคลุมถึง ฿120 ล้าน/ปี</li>
+        <li><strong>เครือ BDMS โดดเด่น</strong> — Bumrungrad / BNH / Samitivej เป็นเครือที่ลูกค้า HNW ใช้บ่อย</li>
+        <li><strong>ทุนจดทะเบียน + เสถียรภาพ</strong> — Allianz Group เป็น Top 5 ของโลกในด้านประกัน</li>
+        <li><strong>ผลิตภัณฑ์ Wealth + Protection ครบ</strong> — ตั้งแต่สุขภาพ โรคร้าย Unit Link จนถึงประกันมรดก</li>
+      </ul>
+
+      <h2>ที่ปรึกษาคนเดียว — สองด้านของชีวิต HNW</h2>
+      <p>
+        ตอนนี้ฟีนเป็นที่ปรึกษาที่ดูแลลูกค้าได้ทั้ง <strong>ฝั่งทรัพย์สิน</strong> (อสังหาฯ HNW) และ
+        <strong>ฝั่งการคุ้มครอง</strong> (ประกันชีวิตและสุขภาพ Allianz Ayudhya) —
+        ซึ่งหายากในตลาดไทย ส่วนใหญ่จะเป็นตัวแทนเฉพาะด้าน
+      </p>
+      <p>
+        ข้อดีคือเวลาวางแผนการเงินภาพรวม ฟีนเข้าใจทั้งสองด้านพร้อมกัน — ทรัพย์สินที่ต้องคุ้มครอง
+        กระแสเงินสดที่จ่ายเบี้ยไหวต่อเดือน ภาษีที่ต้องวางแผน
+        แทนที่จะเป็น 2 ที่ปรึกษาที่ไม่คุยกัน
+      </p>
+
+      <h2>วิธีทำงานของฟีน</h2>
+      <ul>
+        <li><strong>ปรึกษาฟรี ไม่กดดัน</strong> — 15–30 นาที ทาง LINE หรือ Zoom</li>
+        <li><strong>วิเคราะห์ความต้องการ</strong> — ก่อนเสนอแผน ทำ needs analysis ครบทุกมิติ</li>
+        <li><strong>เปรียบเทียบในกลุ่ม Allianz</strong> — เลือกแผนที่ตอบโจทย์ ไม่ใช่แผนที่ค่าคอมสูง</li>
+        <li><strong>ดูแลหลังการขายตลอดชีพ</strong> — เคลม ทบทวนรายปี ปรับแผนตามชีวิตที่เปลี่ยน</li>
+        <li><strong>วางแผนภาษี</strong> — โดยเฉพาะช่วง พ.ย.–ม.ค. ลดหย่อนได้เต็มสิทธิ</li>
+      </ul>
+
+      <blockquote>
+        ประกันที่ดีที่สุด คือประกันที่คุณเข้าใจ และตรงกับชีวิตจริงของคุณ —
+        ไม่ใช่แผนที่หรูที่สุด หรือถูกที่สุด
+      </blockquote>
+    </article>
+  </section>
+
+  {/* CTA */}
+  <section class="container-wide py-section">
+    <div class="rounded-3xl bg-teal-600 text-cream p-12 grid md:grid-cols-2 gap-8 items-center">
+      <div>
+        <h2 class="text-display-md font-display">เริ่มคุยกันเลย</h2>
+        <p class="mt-3 text-cream/80 max-w-prose-narrow">
+          15 นาที — บอกหน่อยว่าคุณกำลังกังวลอะไรอยู่ ฟีนจะช่วยจัดวางแผนให้
+        </p>
+      </div>
+      <div class="flex md:justify-end gap-3 flex-wrap">
+        <a href="/find-my-plan" class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-medium tracking-wide bg-cream text-teal-700 hover:bg-cream/90 transition">
+          ทำแบบสอบถาม Find My Plan →
+        </a>
+        <LineCTA locale={locale} context="ปรึกษาฟีนจากหน้า About" variant="ghost" class="border-cream/40 text-cream hover:bg-cream hover:text-teal-700" />
+      </div>
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,25 @@
+
+export default new Map([
+["src/content/products/double-care.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fproducts%2Fdouble-care.mdx&astroContentModuleFlag=true")],
+["src/content/products/first-class-ultra-bdms.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fproducts%2Ffirst-class-ultra-bdms.mdx&astroContentModuleFlag=true")],
+["src/content/products/multi-care.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fproducts%2Fmulti-care.mdx&astroContentModuleFlag=true")],
+["src/content/products/first-class-ultra.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fproducts%2Ffirst-class-ultra.mdx&astroContentModuleFlag=true")],
+["src/content/products/my-style-wealth-ultra.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fproducts%2Fmy-style-wealth-ultra.mdx&astroContentModuleFlag=true")],
+["src/content/products/my-pension-five.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fproducts%2Fmy-pension-five.mdx&astroContentModuleFlag=true")],
+["src/content/products/my-wealth-legacy.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fproducts%2Fmy-wealth-legacy.mdx&astroContentModuleFlag=true")],
+["src/content/products/superior-health.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fproducts%2Fsuperior-health.mdx&astroContentModuleFlag=true")],
+["src/content/blog/coverage-amount-for-hnw.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fblog%2Fcoverage-amount-for-hnw.mdx&astroContentModuleFlag=true")],
+["src/content/blog/first-class-cuekai.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fblog%2Ffirst-class-cuekai.mdx&astroContentModuleFlag=true")],
+["src/content/blog/double-care-explained.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fblog%2Fdouble-care-explained.mdx&astroContentModuleFlag=true")],
+["src/content/blog/first-class-ultra-bdms-vs-ultra.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fblog%2Ffirst-class-ultra-bdms-vs-ultra.mdx&astroContentModuleFlag=true")],
+["src/content/blog/hnw-buyer-guide-2026.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fblog%2Fhnw-buyer-guide-2026.mdx&astroContentModuleFlag=true")],
+["src/content/blog/six-questions-hnw-asks.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fblog%2Fsix-questions-hnw-asks.mdx&astroContentModuleFlag=true")],
+["src/content/faq/cashless-claim.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Ffaq%2Fcashless-claim.mdx&astroContentModuleFlag=true")],
+["src/content/faq/health-vs-critical.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Ffaq%2Fhealth-vs-critical.mdx&astroContentModuleFlag=true")],
+["src/content/faq/co-payment.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Ffaq%2Fco-payment.mdx&astroContentModuleFlag=true")],
+["src/content/faq/hnw-definition.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Ffaq%2Fhnw-definition.mdx&astroContentModuleFlag=true")],
+["src/content/faq/pre-existing-condition.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Ffaq%2Fpre-existing-condition.mdx&astroContentModuleFlag=true")],
+["src/content/faq/online-application.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Ffaq%2Fonline-application.mdx&astroContentModuleFlag=true")],
+["src/content/faq/unit-link-vs-savings.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Ffaq%2Funit-link-vs-savings.mdx&astroContentModuleFlag=true")],
+["src/content/faq/tax-deduction-limit.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Ffaq%2Ftax-deduction-limit.mdx&astroContentModuleFlag=true")]]);
+		

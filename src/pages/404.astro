@@ -1,0 +1,12 @@
+---
+import Layout from '@layouts/Layout.astro';
+const locale = 'th' as const;
+---
+<Layout title="ไม่พบหน้านี้ — feeninsure" description="ขออภัย ไม่พบหน้านี้" locale={locale} noindex>
+  <section class="container-wide py-section text-center">
+    <p class="font-display text-7xl text-gold-500 mb-6">404</p>
+    <h1 class="text-display-md font-display mb-6">ไม่พบหน้านี้</h1>
+    <p class="text-stone-600 mb-10">ขออภัย หน้าที่คุณกำลังหาอาจถูกย้ายหรือลบไปแล้ว</p>
+    <a href="/" class="btn-primary">กลับหน้าแรก</a>
+  </section>
+</Layout>

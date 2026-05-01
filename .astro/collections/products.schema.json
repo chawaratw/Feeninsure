@@ -1,0 +1,216 @@
+{
+  "$ref": "#/definitions/products",
+  "definitions": {
+    "products": {
+      "type": "object",
+      "properties": {
+        "rank": {
+          "type": "number"
+        },
+        "nameTh": {
+          "type": "string"
+        },
+        "nameEn": {
+          "type": "string"
+        },
+        "taglineTh": {
+          "type": "string"
+        },
+        "taglineEn": {
+          "type": "string"
+        },
+        "audienceTh": {
+          "type": "string"
+        },
+        "audienceEn": {
+          "type": "string"
+        },
+        "coverageTh": {
+          "type": "string"
+        },
+        "coverageEn": {
+          "type": "string"
+        },
+        "onlineFit": {
+          "type": "string",
+          "enum": [
+            "high",
+            "medium",
+            "low"
+          ]
+        },
+        "rating": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 5
+        },
+        "benefits": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "icon": {
+                "type": "string"
+              },
+              "headlineTh": {
+                "type": "string"
+              },
+              "headlineEn": {
+                "type": "string"
+              },
+              "bodyTh": {
+                "type": "string"
+              },
+              "bodyEn": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "icon",
+              "headlineTh",
+              "headlineEn",
+              "bodyTh",
+              "bodyEn"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 1,
+          "maxItems": 3
+        },
+        "allianzUrl": {
+          "type": "string",
+          "format": "uri"
+        },
+        "brochureUrl": {
+          "type": "string"
+        },
+        "badge": {
+          "type": "string"
+        },
+        "related": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "keywordsPrimary": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "keywordsSecondary": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "details": {
+          "type": "object",
+          "properties": {
+            "planTiers": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "coverage": {
+                    "type": "string"
+                  },
+                  "bestFor": {
+                    "type": "string"
+                  },
+                  "notes": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name",
+                  "coverage"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "whatsCovered": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "whatsNotCovered": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "waitingPeriods": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "item": {
+                    "type": "string"
+                  },
+                  "period": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "item",
+                  "period"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "renewalAge": {
+              "type": "string"
+            },
+            "hospitalNetwork": {
+              "type": "string"
+            },
+            "coPayment": {
+              "type": "string"
+            },
+            "issueAge": {
+              "type": "string"
+            },
+            "premiumPaymentPeriod": {
+              "type": "string"
+            },
+            "coverageDuration": {
+              "type": "string"
+            },
+            "taxDeductible": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "$schema": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "rank",
+        "nameTh",
+        "nameEn",
+        "taglineTh",
+        "taglineEn",
+        "audienceTh",
+        "audienceEn",
+        "coverageTh",
+        "coverageEn",
+        "onlineFit",
+        "rating",
+        "benefits"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

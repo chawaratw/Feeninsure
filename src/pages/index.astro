@@ -1,0 +1,284 @@
+---
+import Layout from '@layouts/Layout.astro';
+import LineCTA from '@components/LineCTA.astro';
+import ProductCard from '@components/ProductCard.astro';
+import MeetFeen from '@components/MeetFeen.astro';
+import { SITE } from '@lib/site';
+import { t } from '@i18n/strings';
+
+const locale = 'th' as const;
+
+const featured = [
+  {
+    href: '/products/first-class-ultra-bdms',
+    name: 'First Class Ultra @BDMS',
+    audience: 'HNW · ครอบครัวร่ำรวย',
+    coverage: 'สูงสุด ฿120 ล้าน/ปี',
+    badge: 'Top Plan',
+    rating: 5 as const,
+    image: '/images/lifestyle/boat-sunset.jpg',
+    imageAlt: 'ผู้หญิงบนเรือยอชต์ตอนพระอาทิตย์ตก สื่อถึงการใช้ชีวิตอย่างเต็มที่',
+  },
+  {
+    href: '/products/double-care',
+    name: 'ปลดล็อค ดับเบิล แคร์',
+    audience: 'กังวลโรคร้ายแรง',
+    coverage: 'วงเงินเพิ่มเป็น 2 เท่าเมื่อโรคร้าย',
+    badge: 'Most Online-Friendly',
+    rating: 5 as const,
+    image: '/images/lifestyle/friends-sunset.jpg',
+    imageAlt: 'เพื่อนสองคนนั่งบนรถออฟโรดยามพระอาทิตย์ตก',
+  },
+  {
+    href: '/products/multi-care',
+    name: 'มัลติ แคร์',
+    audience: 'ครอบครัวที่มีประวัติโรคร้าย',
+    coverage: 'คุ้มครอง 81 โรค · เคลมซ้ำได้',
+    badge: 'Repeat Claims',
+    rating: 4 as const,
+    image: '/images/lifestyle/sailor.jpg',
+    imageAlt: 'ผู้ชายในชุดเดินเรือบนเรือใบ สื่อถึงการเดินทางและการใช้ชีวิต',
+  },
+];
+
+const homeSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': `${SITE.url}/#website`,
+  url: SITE.url,
+  name: SITE.brand.full,
+  inLanguage: 'th-TH',
+  publisher: { '@id': `${SITE.url}/#agency` },
+};
+---
+<Layout
+  title={t('meta.home.title', locale)}
+  description={t('meta.home.desc', locale)}
+  locale={locale}
+  jsonLd={homeSchema}
+>
+  {/* ─────────────────────────────────────────────
+      HERO — full-bleed editorial image with overlay text
+      ───────────────────────────────────────────── */}
+  <section class="relative h-[90vh] min-h-[600px] max-h-[900px] overflow-hidden -mt-[1px]">
+    <img
+      src="/images/lifestyle/boat-sunset.jpg"
+      alt="ชีวิตพรีเมียมบนเรือยอชต์ที่ทะเลเมดิเตอเรเนียน — feeninsure"
+      class="absolute inset-0 h-full w-full object-cover"
+      fetchpriority="high"
+    />
+    <div class="absolute inset-0 bg-gradient-to-b from-ink/10 via-ink/30 to-ink/70"></div>
+
+    <div class="relative h-full container-wide flex flex-col justify-end pb-16 lg:pb-24 text-cream">
+      <p class="text-[10px] sm:text-xs uppercase tracking-[0.3em] mb-6 opacity-80">
+        Allianz Ayudhya · Premium / HNW
+      </p>
+      <h1 class="font-display text-[clamp(2.5rem,8vw,7rem)] leading-[0.95] tracking-tight max-w-5xl">
+        Live <span class="italic font-light">full.</span><br/>
+        Worry <span class="italic font-light">less.</span>
+      </h1>
+      <p class="mt-8 text-lg sm:text-xl max-w-2xl leading-relaxed text-cream/85 font-light">
+        ชีวิตที่ดีคือชีวิตที่ <em class="text-gold-400 not-italic font-medium">ไม่ต้องระวังตลอดเวลา</em> —
+        ฟีนวางแผนประกันชีวิตและสุขภาพระดับ First Class จาก Allianz Ayudhya
+        เพื่อให้คุณใช้ชีวิตได้เต็มที่ โดยไม่ต้องเสียสละสิ่งสำคัญในยามวิกฤต
+      </p>
+      <div class="mt-10 flex flex-wrap gap-4">
+        <a href="/find-my-plan" class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-medium tracking-wide bg-cream text-teal-700 hover:bg-cream/90 transition">
+          หาแผนที่ใช่สำหรับคุณ →
+        </a>
+        <LineCTA locale={locale} context="หน้าแรก" variant="ghost" class="border-cream/40 text-cream hover:bg-cream hover:text-teal-700" />
+      </div>
+    </div>
+  </section>
+
+  {/* ─────────────────────────────────────────────
+      MEET FEEN — trust bridge under hero
+      ───────────────────────────────────────────── */}
+  <MeetFeen locale={locale} />
+
+  {/* ─────────────────────────────────────────────
+      MANIFESTO — editorial pullquote
+      ───────────────────────────────────────────── */}
+  <section class="container-wide py-section">
+    <div class="grid lg:grid-cols-12 gap-10 items-start">
+      <div class="lg:col-span-5">
+        <p class="text-xs uppercase tracking-[0.3em] text-teal-700 mb-6">Manifesto</p>
+        <h2 class="font-display text-display-lg leading-[1.05] text-ink">
+          ประกันที่ดี<br/>
+          ไม่ใช่เรื่องของ<br/>
+          <span class="italic text-teal-700">ความกลัว</span>
+        </h2>
+      </div>
+      <div class="lg:col-span-7 lg:pt-6">
+        <p class="text-xl leading-relaxed text-stone-700 font-light max-w-prose-narrow">
+          แต่เป็นเรื่องของ <strong class="font-medium">การให้สิทธิ์ตัวเอง</strong>
+          ที่จะลงทุนในประสบการณ์ดีๆ ของชีวิต — เดินทาง ลองอาหาร เลี้ยงลูก
+          พักผ่อนสุดสัปดาห์ — โดยไม่ต้องเก็บเงินก้อนสำรองให้กับสิ่งที่อาจจะเกิด
+          แต่ส่วนใหญ่จะไม่เกิด
+        </p>
+        <p class="mt-6 text-lg leading-relaxed text-stone-600 max-w-prose-narrow">
+          ฟีนเลือกแผน Allianz Ayudhya ที่เหมาะกับคนที่ <em>เข้าใจคุณค่าของเวลา</em> —
+          แผนที่จ่ายไหว แต่คุ้มครองในระดับที่ทำให้คุณ "นอนหลับสบาย" ได้จริง
+        </p>
+        <blockquote class="mt-10 pl-6 border-l-2 border-gold-500 font-display text-2xl italic text-stone-700 max-w-prose-narrow">
+          "เราไม่ได้ขายความกลัว — เราคืน <span class="text-teal-700">ชีวิตที่กล้าใช้</span> ให้คุณ"
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  {/* ─────────────────────────────────────────────
+      LIFESTYLE GALLERY — "for lives worth protecting"
+      ───────────────────────────────────────────── */}
+  <section class="bg-stone-100/60 py-section">
+    <div class="container-wide mb-16">
+      <p class="text-xs uppercase tracking-[0.3em] text-stone-400 mb-6">For lives worth protecting</p>
+      <h2 class="font-display text-display-lg text-ink leading-[1.05] max-w-3xl">
+        ชีวิตที่คุณ <span class="italic">รัก</span> — ทุกบทตอนคือสิ่งที่ฟีนคุ้มครอง
+      </h2>
+    </div>
+
+    <div class="container-wide grid grid-cols-12 gap-4 sm:gap-6">
+      {/* Big left photo */}
+      <figure class="col-span-12 lg:col-span-7 relative aspect-[4/3] lg:aspect-[5/4] overflow-hidden rounded-3xl">
+        <img src="/images/lifestyle/couple-cadillac.jpg" alt="คู่รักออกเดินทางในรถ Cadillac คลาสสิก" loading="lazy" class="absolute inset-0 h-full w-full object-cover" />
+        <figcaption class="absolute bottom-6 left-6 right-6 text-cream">
+          <p class="text-xs uppercase tracking-[0.2em] mb-2 opacity-80">เดินทาง</p>
+          <p class="font-display text-2xl italic">"ทริปครอบครัวที่ไม่ต้องเลื่อนเพราะใบเสร็จโรงพยาบาล"</p>
+        </figcaption>
+        <div class="absolute inset-0 bg-gradient-to-t from-ink/60 via-transparent to-transparent"></div>
+      </figure>
+
+      {/* Stacked right column */}
+      <div class="col-span-12 lg:col-span-5 grid grid-cols-1 gap-4 sm:gap-6">
+        <figure class="relative aspect-[4/3] overflow-hidden rounded-3xl">
+          <img src="/images/lifestyle/seaside-friends.jpg" alt="เพื่อนใช้เวลาด้วยกันริมทะเล" loading="lazy" class="absolute inset-0 h-full w-full object-cover" />
+          <figcaption class="absolute bottom-6 left-6 right-6 text-cream">
+            <p class="text-xs uppercase tracking-[0.2em] mb-2 opacity-80">มิตรภาพ</p>
+            <p class="font-display text-xl italic">"ช่วงเวลาดีๆ ที่ไม่มีวันถูกเลื่อน"</p>
+          </figcaption>
+          <div class="absolute inset-0 bg-gradient-to-t from-ink/60 via-transparent to-transparent"></div>
+        </figure>
+
+        <figure class="relative aspect-[4/3] overflow-hidden rounded-3xl">
+          <img src="/images/lifestyle/car-countryside.jpg" alt="รถยนต์คลาสสิกในชนบท" loading="lazy" class="absolute inset-0 h-full w-full object-cover" />
+          <figcaption class="absolute bottom-6 left-6 right-6 text-cream">
+            <p class="text-xs uppercase tracking-[0.2em] mb-2 opacity-80">เสรีภาพ</p>
+            <p class="font-display text-xl italic">"ออกไปได้เสมอ — ไม่ต้องคิดเรื่องค่ารักษา"</p>
+          </figcaption>
+          <div class="absolute inset-0 bg-gradient-to-t from-ink/60 via-transparent to-transparent"></div>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  {/* ─────────────────────────────────────────────
+      FEATURED PLANS — image-led product cards
+      ───────────────────────────────────────────── */}
+  <section class="container-wide py-section">
+    <header class="flex items-end justify-between mb-12">
+      <div>
+        <p class="text-xs uppercase tracking-[0.3em] text-teal-700 mb-4">3 of 8 · {t('home.featured', locale)}</p>
+        <h2 class="text-display-lg font-display text-ink leading-[1.05]">แผนที่<br/>เริ่มที่นี่</h2>
+      </div>
+      <a href="/products" class="hidden md:inline-flex items-center gap-2 text-sm uppercase tracking-widest text-teal-700 hover:text-teal-900">
+        ดูทั้งหมด →
+      </a>
+    </header>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {featured.map((p) => (
+        <ProductCard
+          href={p.href}
+          name={p.name}
+          audience={p.audience}
+          coverage={p.coverage}
+          badge={p.badge}
+          rating={p.rating}
+          image={p.image}
+          imageAlt={p.imageAlt}
+        />
+      ))}
+    </div>
+  </section>
+
+  {/* ─────────────────────────────────────────────
+      WHY FEEN — editorial split with photo
+      ───────────────────────────────────────────── */}
+  <section class="bg-ink text-cream py-section overflow-hidden">
+    <div class="container-wide grid lg:grid-cols-12 gap-12 items-center">
+      <div class="lg:col-span-7 lg:order-2 relative">
+        <figure class="relative aspect-[4/5] lg:aspect-[3/4] overflow-hidden rounded-3xl">
+          <img src="/images/lifestyle/sailor.jpg" alt="ชีวิตที่กล้าออกเดินทาง" loading="lazy" class="absolute inset-0 h-full w-full object-cover" />
+        </figure>
+      </div>
+      <div class="lg:col-span-5 lg:order-1">
+        <p class="text-xs uppercase tracking-[0.3em] text-gold-400 mb-6">{t('home.why.title', locale)}</p>
+        <h2 class="font-display text-display-lg leading-[1.05] mb-12">
+          ที่ปรึกษา —<br/>
+          <span class="italic">ไม่ใช่นักขาย</span>
+        </h2>
+        <div class="space-y-10">
+          {[
+            { num: '01', h: t('home.why.p1.h', locale), b: t('home.why.p1.b', locale) },
+            { num: '02', h: t('home.why.p2.h', locale), b: t('home.why.p2.b', locale) },
+            { num: '03', h: t('home.why.p3.h', locale), b: t('home.why.p3.b', locale) },
+          ].map((item) => (
+            <article class="grid grid-cols-[auto_1fr] gap-6 items-baseline">
+              <p class="font-display text-3xl text-gold-400">{item.num}</p>
+              <div>
+                <h3 class="text-xl font-medium mb-2">{item.h}</h3>
+                <p class="text-cream/70 leading-relaxed">{item.b}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ─────────────────────────────────────────────
+      FIND-MY-PLAN TEASER (replaces old substitute compare)
+      ───────────────────────────────────────────── */}
+  <section class="container-wide py-section">
+    <div class="grid lg:grid-cols-2 gap-16 items-center">
+      <div>
+        <p class="text-xs uppercase tracking-[0.3em] text-teal-700 mb-6">Find My Plan</p>
+        <h2 class="font-display text-display-lg text-ink leading-[1.05] mb-8">
+          ไม่รู้จะเริ่มที่ไหน?<br/>
+          <span class="italic">ตอบ 5 คำถาม</span>
+        </h2>
+        <p class="text-lg text-stone-600 leading-relaxed mb-10 max-w-prose-narrow">
+          แค่ 60 วินาที — ฟีนวิเคราะห์ความต้องการของคุณ แล้วแนะนำ 1–3 แผนที่
+          <em>ใช่ที่สุด</em> สำหรับคุณ พร้อมส่ง PDF สรุปให้ทางอีเมล
+        </p>
+        <div class="flex flex-wrap gap-3">
+          <a href="/find-my-plan" class="btn-primary">เริ่มทำแบบสอบถาม →</a>
+          <a href="/products" class="btn-ghost">หรือดูทั้ง 8 แผน</a>
+        </div>
+      </div>
+      <figure class="relative aspect-[4/3] rounded-3xl overflow-hidden bg-teal-700">
+        <img src="/images/lifestyle/friends-sunset.jpg" alt="แผนที่ใช่ คือแผนที่ออกแบบให้คุณโดยเฉพาะ" loading="lazy" class="absolute inset-0 h-full w-full object-cover opacity-90" />
+        <div class="absolute inset-0 bg-gradient-to-t from-teal-900/70 via-teal-900/20 to-transparent"></div>
+        <figcaption class="absolute bottom-6 left-6 right-6 text-cream">
+          <p class="font-display text-3xl italic leading-tight">"I want the best plan,<br/>not the most-sold plan."</p>
+          <p class="mt-3 text-cream/80 text-sm">— what every HNW client tells me first</p>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  {/* ─────────────────────────────────────────────
+      CTA STRIP
+      ───────────────────────────────────────────── */}
+  <section class="bg-teal-600 text-cream py-20">
+    <div class="container-wide flex flex-col md:flex-row md:items-center md:justify-between gap-8">
+      <div>
+        <h2 class="font-display text-display-md">ปรึกษาฟรี ไม่กดดัน</h2>
+        <p class="mt-3 text-cream/80 max-w-prose-narrow">
+          15 นาที ทาง LINE หรือ Zoom — ฟีนวิเคราะห์ความต้องการคุณก่อน แล้วค่อยเสนอแผนที่ตรงจุดที่สุด
+        </p>
+      </div>
+      <LineCTA locale={locale} context="ปรึกษาทั่วไป" variant="ghost" class="border-cream text-cream hover:bg-cream hover:text-teal-700" />
+    </div>
+  </section>
+</Layout>

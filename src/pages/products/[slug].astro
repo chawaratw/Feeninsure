@@ -1,0 +1,200 @@
+---
+import Layout from '@layouts/Layout.astro';
+import LineCTA from '@components/LineCTA.astro';
+import BenefitCard from '@components/BenefitCard.astro';
+import ProductCard from '@components/ProductCard.astro';
+import ProductDetailsTable from '@components/ProductDetailsTable.astro';
+import QuoteForm from '@components/QuoteForm.astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
+import { SITE } from '@lib/site';
+
+export async function getStaticPaths() {
+  const products = await getCollection('products');
+  return products.map((p) => ({ params: { slug: p.slug }, props: { product: p } }));
+}
+
+interface Props { product: CollectionEntry<'products'> }
+const { product } = Astro.props;
+const { Content } = await product.render();
+const data = product.data;
+const slug = product.slug;
+const locale = 'th' as const;
+
+const all = await getCollection('products');
+const related = data.related
+  .map((s) => all.find((p) => p.slug === s))
+  .filter(Boolean) as CollectionEntry<'products'>[];
+
+const onlineFitLabel = { high: 'ปิดงานออนไลน์ได้', medium: 'ปรึกษาออนไลน์ก่อนนัดพบ', low: 'ต้องนัดพบ Underwriting' }[data.onlineFit];
+
+// Per-product editorial hero photo. Themed to product narrative.
+const heroImageMap: Record<string, string> = {
+  'first-class-ultra-bdms':  '/images/lifestyle/boat-sunset.jpg',
+  'first-class-ultra':       '/images/lifestyle/sailor.jpg',
+  'double-care':             '/images/lifestyle/friends-sunset.jpg',
+  'multi-care':              '/images/lifestyle/seaside-friends.jpg',
+  'my-style-wealth-ultra':   '/images/lifestyle/couple-cadillac.jpg',
+  'my-pension-five':         '/images/lifestyle/car-countryside.jpg',
+  'superior-health':         '/images/lifestyle/sailor.jpg',
+  'my-wealth-legacy':        '/images/lifestyle/couple-cadillac.jpg',
+};
+const heroImage = heroImageMap[slug] ?? '/images/lifestyle/boat-sunset.jpg';
+
+const productSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FinancialProduct',
+  name: data.nameTh,
+  alternateName: data.nameEn,
+  description: data.taglineTh,
+  url: `${SITE.url}/products/${slug}`,
+  provider: { '@type': 'Organization', name: SITE.agent.company, url: SITE.allianz.home },
+  audience: { '@type': 'Audience', audienceType: data.audienceTh },
+  category: 'Insurance',
+  offers: { '@type': 'Offer', availability: 'https://schema.org/InStock', seller: { '@id': `${SITE.url}/#agency` } },
+};
+
+const breadcrumb = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'หน้าแรก', item: SITE.url },
+    { '@type': 'ListItem', position: 2, name: 'ผลิตภัณฑ์', item: `${SITE.url}/products` },
+    { '@type': 'ListItem', position: 3, name: data.nameTh, item: `${SITE.url}/products/${slug}` },
+  ],
+};
+
+const metaTitle = `${data.nameTh} — รายละเอียดและความคุ้มครอง | feeninsure`;
+const metaDesc = `${data.taglineTh} เหมาะกับ ${data.audienceTh} วงเงิน ${data.coverageTh} ปรึกษาฟีนฟรีทาง LINE`;
+---
+<Layout title={metaTitle} description={metaDesc} locale={locale} jsonLd={[productSchema, breadcrumb]}>
+  {/* HERO — full-bleed editorial photo with overlay */}
+  <section class="relative h-[70vh] min-h-[480px] max-h-[780px] overflow-hidden -mt-[1px]">
+    <img src={heroImage} alt={data.taglineTh} class="absolute inset-0 h-full w-full object-cover" fetchpriority="high" />
+    <div class="absolute inset-0 bg-gradient-to-b from-ink/20 via-ink/40 to-ink/80"></div>
+    <div class="relative h-full container-wide flex flex-col justify-end pb-12 lg:pb-16 text-cream">
+      <nav class="text-xs uppercase tracking-widest opacity-80 mb-6" aria-label="Breadcrumb">
+        <a href="/" class="hover:text-gold-400">หน้าแรก</a>
+        <span class="mx-2">·</span>
+        <a href="/products" class="hover:text-gold-400">ผลิตภัณฑ์</a>
+      </nav>
+      {data.badge && (
+        <span class="inline-block text-[10px] uppercase tracking-[0.2em] text-cream bg-ink/40 backdrop-blur px-3 py-1.5 rounded-full mb-4 self-start">
+          {data.badge}
+        </span>
+      )}
+      <h1 class="font-display text-[clamp(2.25rem,6vw,5rem)] leading-[1] tracking-tight max-w-4xl mb-6">
+        {data.nameTh}
+      </h1>
+      <p class="font-display italic text-xl sm:text-2xl text-cream/90 max-w-3xl leading-snug">
+        {data.taglineTh}
+      </p>
+    </div>
+  </section>
+
+  {/* META STRIP — under hero */}
+  <section class="border-b border-stone-200 bg-cream">
+    <div class="container-wide py-10 grid lg:grid-cols-12 gap-8 items-center">
+      <dl class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-3 gap-6">
+        <div>
+          <dt class="text-xs uppercase tracking-widest text-stone-400 mb-1">เหมาะกับ</dt>
+          <dd class="font-medium text-ink">{data.audienceTh}</dd>
+        </div>
+        <div>
+          <dt class="text-xs uppercase tracking-widest text-stone-400 mb-1">วงเงิน</dt>
+          <dd class="font-medium text-ink">{data.coverageTh}</dd>
+        </div>
+        <div>
+          <dt class="text-xs uppercase tracking-widest text-stone-400 mb-1">ออนไลน์</dt>
+          <dd class="font-medium text-ink">{onlineFitLabel}</dd>
+        </div>
+      </dl>
+      <div class="lg:col-span-5 flex flex-wrap gap-3 lg:justify-end">
+        <LineCTA locale={locale} context={data.nameTh} />
+        {data.allianzUrl && (
+          <a href={data.allianzUrl} target="_blank" rel="noopener noreferrer" class="btn-ghost text-sm">
+            รายละเอียด Allianz ↗
+          </a>
+        )}
+      </div>
+    </div>
+  </section>
+
+  {/* 1-3 KEY BENEFITS — low cognitive load */}
+  <section class="container-wide py-section">
+    <header class="mb-12 max-w-prose-narrow">
+      <p class="text-xs uppercase tracking-[0.2em] text-teal-700 mb-4">
+        {data.benefits.length === 1 ? '1 จุดเด่น' : `${data.benefits.length} จุดเด่นที่ต้องรู้`}
+      </p>
+      <h2 class="text-display-lg font-display text-ink">ทำไมแผนนี้</h2>
+    </header>
+    <div class={`grid gap-6 ${data.benefits.length === 1 ? '' : data.benefits.length === 2 ? 'md:grid-cols-2' : 'md:grid-cols-3'}`}>
+      {data.benefits.map((b, i) => (
+        <BenefitCard
+          icon={b.icon}
+          headline={b.headlineTh}
+          body={b.bodyTh}
+          accent={i === 1 ? 'gold' : 'teal'}
+        />
+      ))}
+    </div>
+  </section>
+
+  {/* MDX BODY — context, who it's for, considerations */}
+  <section class="container-wide py-12">
+    <div class="prose-editorial">
+      <Content />
+    </div>
+  </section>
+
+  {/* PRODUCT DETAILS TABLE — substantive info so visitor doesn't leave */}
+  <ProductDetailsTable product={product} />
+
+  {/* QUOTE REQUEST — structured lead capture per product (item 7) */}
+  <section class="bg-stone-100/60 py-section">
+    <div class="container-wide grid lg:grid-cols-12 gap-10">
+      <div class="lg:col-span-5">
+        <p class="text-xs uppercase tracking-[0.3em] text-teal-700 mb-4">เริ่มที่นี่</p>
+        <h2 class="text-display-md font-display mb-6 leading-[1.05]">
+          ขอใบเสนอราคา<br/>
+          <span class="italic">ที่แม่นยำ</span>
+        </h2>
+        <p class="text-stone-600 leading-relaxed max-w-prose-narrow mb-8">
+          ฟอร์มสั้นๆ ใช้เวลา 30 วินาที — ฟีนติดต่อกลับใน 1 วันทำการ
+          พร้อมใบเสนอราคาที่ตรงกับโปรไฟล์ของคุณ
+        </p>
+        <div class="flex flex-col gap-3 mb-10">
+          <LineCTA locale={locale} context={data.nameTh} variant="ghost" label="หรือทักฟีนทาง LINE ทันที" />
+          <a href="/find-my-plan" class="text-sm text-teal-700 hover:text-teal-900 inline-flex items-center gap-1">
+            ไม่แน่ใจว่าแผนนี้ใช่ไหม? ลอง Find My Plan →
+          </a>
+        </div>
+      </div>
+      <div class="lg:col-span-7">
+        <QuoteForm
+          locale={locale}
+          productSlug={slug}
+          productName={data.nameTh}
+          source="product-page"
+        />
+      </div>
+    </div>
+  </section>
+
+  {related.length > 0 && (
+    <section class="container-wide py-section">
+      <h2 class="text-display-md font-display mb-10">แผนที่เกี่ยวข้อง</h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {related.map((r) => (
+          <ProductCard
+            href={`/products/${r.slug}`}
+            name={r.data.nameTh}
+            audience={r.data.audienceTh}
+            coverage={r.data.coverageTh}
+            badge={r.data.badge}
+            rating={r.data.rating as 1|2|3|4|5}
+          />
+        ))}
+      </div>
+    </section>
+  )}
+</Layout>

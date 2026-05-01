@@ -1,0 +1,96 @@
+---
+// "Meet Feen" intro section — sits below the home hero, above the manifesto.
+// Trust bridge: turns the cinematic hero promise into a real human authority.
+import { SITE, type Locale } from '@lib/site';
+
+interface Props {
+  locale: Locale;
+  /** Path under /public — replace with actual headshot from Agent Morfeen folder */
+  portrait?: string;
+}
+
+const { locale, portrait = '/images/feen-portrait.jpg' } = Astro.props;
+const isTh = locale === 'th';
+---
+<section class="container-wide py-section">
+  <div class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+    <figure class="lg:col-span-5 relative aspect-[4/5] overflow-hidden rounded-3xl bg-stone-100 ring-1 ring-stone-200">
+      <img
+        src={portrait}
+        alt={isTh ? 'ฟีน — ชณิชา เศรษฐาอมร' : 'Feen — Chanicha Setha-amorn'}
+        loading="eager"
+        class="absolute inset-0 h-full w-full object-cover"
+      />
+    </figure>
+
+    <div class="lg:col-span-7">
+      <p class="text-xs uppercase tracking-[0.3em] text-teal-700 mb-6">
+        {isTh ? 'พบกับฟีน' : 'Meet Feen'}
+      </p>
+      <h2 class="font-display text-display-md lg:text-display-lg leading-[1.05] text-ink mb-8">
+        {isTh ? (
+          <>
+            ที่ปรึกษา<br/>
+            ที่เข้าใจชีวิต<br/>
+            <span class="italic text-teal-700">HNW จริงๆ</span>
+          </>
+        ) : (
+          <>
+            An advisor<br/>
+            who understands<br/>
+            <span class="italic text-teal-700">HNW life.</span>
+          </>
+        )}
+      </h2>
+
+      <div class="space-y-5 text-lg text-stone-700 leading-relaxed max-w-prose-narrow">
+        {isTh ? (
+          <>
+            <p>
+              ฟีนเริ่มต้นเป็น <strong class="text-ink">นายหน้าอสังหาริมทรัพย์ระดับ HNW</strong>
+              มากว่า 5 ปี ดูแลลูกค้าระดับสูงทั้งคอนโดหรู บ้านเดี่ยว และอสังหาฯ เพื่อการลงทุน
+            </p>
+            <p>
+              ระหว่างนั้น ลูกค้าจำนวนมากถามคำถามเดิมๆ —
+              <em>"ประกันชีวิตและสุขภาพควรทำที่ไหน? แบบไหนเหมาะกับเรา?"</em>
+              ฟีนเลยตัดสินใจ <strong class="text-ink">รับใบอนุญาตตัวแทน Allianz Ayudhya</strong>
+              เพื่อตอบคำถามนั้นได้อย่างมืออาชีพ
+            </p>
+            <p>
+              ตอนนี้ฟีนเป็นที่ปรึกษาคนเดียวที่ดูแลคุณได้ทั้งฝั่ง
+              <strong class="text-ink">ทรัพย์สิน</strong> และ <strong class="text-ink">การคุ้มครอง</strong> —
+              เข้าใจไลฟ์สไตล์ HNW จากประสบการณ์จริง ไม่ใช่จากเอกสารฝึกอบรม
+            </p>
+          </>
+        ) : (
+          <>
+            <p>
+              Feen spent <strong class="text-ink">5+ years as a real estate agent serving HNW clients</strong> —
+              luxury condos, single-family residences, and investment properties.
+            </p>
+            <p>
+              The same clients kept asking the same question —
+              <em>"Where should we get life and health insurance?"</em>
+              So Feen got <strong class="text-ink">Allianz Ayudhya certified</strong>
+              to answer it properly.
+            </p>
+            <p>
+              Today she's a single advisor who serves both sides of HNW life —
+              <strong class="text-ink">wealth</strong> and <strong class="text-ink">protection</strong> —
+              shaped by lived experience, not just product training.
+            </p>
+          </>
+        )}
+      </div>
+
+      <div class="mt-10 flex flex-wrap items-center gap-6">
+        <a href={isTh ? '/about' : '/en/about'} class="text-sm uppercase tracking-widest text-teal-700 hover:text-teal-900 inline-flex items-center gap-2">
+          {isTh ? 'อ่านเรื่องของฟีน' : 'Read Feen\'s story'} →
+        </a>
+        <span class="text-xs text-stone-400">
+          {SITE.agent.team} · {SITE.agent.company.replace(' Assurance PCL.', '')}
+        </span>
+      </div>
+    </div>
+  </div>
+</section>

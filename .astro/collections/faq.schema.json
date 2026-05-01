@@ -1,0 +1,55 @@
+{
+  "$ref": "#/definitions/faq",
+  "definitions": {
+    "faq": {
+      "type": "object",
+      "properties": {
+        "q": {
+          "type": "string"
+        },
+        "qEn": {
+          "type": "string"
+        },
+        "a": {
+          "type": "string"
+        },
+        "aEn": {
+          "type": "string"
+        },
+        "category": {
+          "type": "string",
+          "enum": [
+            "general",
+            "health",
+            "critical-illness",
+            "savings",
+            "pension",
+            "tax",
+            "claims"
+          ]
+        },
+        "relatedProducts": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "rank": {
+          "type": "number",
+          "default": 50
+        },
+        "$schema": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "q",
+        "a",
+        "category"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

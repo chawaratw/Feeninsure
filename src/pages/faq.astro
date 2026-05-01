@@ -1,0 +1,76 @@
+---
+import Layout from '@layouts/Layout.astro';
+import LineCTA from '@components/LineCTA.astro';
+import { getCollection } from 'astro:content';
+
+const locale = 'th' as const;
+const entries = (await getCollection('faq')).sort((a, b) => a.data.rank - b.data.rank);
+
+// FAQPage Schema.org block — drives AI snippet citations
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: entries.map((e) => ({
+    '@type': 'Question',
+    name: e.data.q,
+    acceptedAnswer: { '@type': 'Answer', text: e.data.a },
+  })),
+};
+
+const categoryLabel: Record<string, string> = {
+  general: 'ทั่วไป',
+  health: 'ประกันสุขภาพ',
+  'critical-illness': 'โรคร้ายแรง',
+  savings: 'ออมทรัพย์',
+  pension: 'บำนาญ',
+  tax: 'ภาษี',
+  claims: 'การเคลม',
+};
+
+const groups = entries.reduce<Record<string, typeof entries>>((acc, e) => {
+  (acc[e.data.category] ??= []).push(e);
+  return acc;
+}, {});
+---
+<Layout
+  title="คำถามที่พบบ่อย — ประกันสุขภาพและประกันชีวิต Allianz Ayudhya | feeninsure"
+  description="คำตอบสำหรับคำถามยอดฮิตเรื่องประกันสุขภาพ ประกันโรคร้าย ประกันบำนาญ การลดหย่อนภาษี และวิธีเคลม Allianz Ayudhya"
+  locale={locale}
+  jsonLd={faqSchema}
+>
+  <section class="container-wide py-section">
+    <header class="mb-16 max-w-prose-narrow">
+      <p class="text-xs uppercase tracking-[0.2em] text-teal-700 mb-6">คำถามที่พบบ่อย</p>
+      <h1 class="text-display-xl font-display text-ink leading-[1.05]">FAQ</h1>
+      <p class="mt-8 text-lg text-stone-600 leading-relaxed">
+        คำตอบสั้นๆ ตรงๆ — สำหรับคำถามที่ฟีนได้รับบ่อยที่สุด
+        ถ้าไม่มีคำตอบที่คุณตามหา <a href="#" class="text-teal-700 underline underline-offset-4">ถามฟีนทาง LINE</a> ได้เลย
+      </p>
+    </header>
+
+    {Object.entries(groups).map(([cat, items]) => (
+      <div class="mb-16">
+        <h2 class="text-xs uppercase tracking-[0.2em] text-stone-400 mb-6">{categoryLabel[cat] ?? cat}</h2>
+        <div class="space-y-2 max-w-3xl">
+          {items.map((e) => (
+            <details class="group rounded-2xl bg-stone-100 ring-1 ring-stone-200 hover:ring-teal-600/40 transition px-6 py-4 open:bg-cream">
+              <summary class="cursor-pointer flex items-start justify-between gap-4 list-none">
+                <h3 class="font-display text-lg text-ink pr-4">{e.data.q}</h3>
+                <span class="mt-1 text-teal-700 text-xl group-open:rotate-45 transition" aria-hidden="true">+</span>
+              </summary>
+              <div class="mt-4 text-stone-700 leading-relaxed text-[0.95rem] whitespace-pre-line">{e.data.a}</div>
+            </details>
+          ))}
+        </div>
+      </div>
+    ))}
+
+    <div class="mt-20 rounded-3xl bg-teal-600 text-cream p-12 text-center">
+      <h2 class="text-display-md font-display mb-4">ไม่เจอคำตอบที่ใช่?</h2>
+      <p class="mb-8 text-cream/80 max-w-prose-narrow mx-auto">
+        ส่งคำถามมาทาง LINE — ฟีนตอบเองทุกข้อความใน 1 วันทำการ
+      </p>
+      <LineCTA locale={locale} context="คำถามจาก FAQ" />
+    </div>
+  </section>
+</Layout>

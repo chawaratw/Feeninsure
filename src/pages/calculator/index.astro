@@ -1,0 +1,54 @@
+---
+import Layout from '@layouts/Layout.astro';
+const locale = 'th' as const;
+
+const tools = [
+  {
+    href: '/calculator/health-premium',
+    name: 'คำนวณเบี้ยประกันสุขภาพ',
+    desc: 'ประมาณเบี้ยรายปีจาก อายุ เพศ และระดับวงเงินคุ้มครอง',
+    accent: 'teal',
+  },
+  {
+    href: '/calculator/tax-savings',
+    name: 'คำนวณภาษีที่ประหยัดได้',
+    desc: 'รายได้ของคุณ + เบี้ยประกัน → เห็นว่าลดหย่อนได้กี่บาท',
+    accent: 'gold',
+  },
+  {
+    href: '/calculator/retirement',
+    name: 'คำนวณเงินเกษียณที่ต้องเตรียม',
+    desc: 'อายุปัจจุบัน + ค่าใช้จ่าย → จำนวนทุนสุทธิที่ต้องสะสม',
+    accent: 'teal',
+  },
+];
+---
+<Layout
+  title="เครื่องคำนวณ — เบี้ยประกัน · ภาษี · เงินเกษียณ | feeninsure"
+  description="เครื่องคำนวณเบี้ยประกันสุขภาพ Allianz Ayudhya ประมาณการลดหย่อนภาษี และทุนเกษียณที่ต้องเตรียม โดยฟีน — ใช้ได้ฟรี ไม่ต้องลงทะเบียน"
+  locale={locale}
+>
+  <section class="container-wide py-section">
+    <header class="mb-16 max-w-prose-narrow">
+      <p class="text-xs uppercase tracking-[0.2em] text-teal-700 mb-6">เครื่องมือ</p>
+      <h1 class="text-display-xl font-display text-ink leading-[1.05]">
+        คำนวณก่อน<br/>
+        <span class="italic">ตัดสินใจทีหลัง</span>
+      </h1>
+      <p class="mt-8 text-lg text-stone-600 leading-relaxed">
+        ใช้ฟรี ไม่ต้องลงทะเบียน ไม่ต้องให้เบอร์ — แค่ตัวเลขประมาณการเพื่อคุยให้ตรงประเด็นเวลาปรึกษาฟีน
+      </p>
+    </header>
+
+    <div class="grid md:grid-cols-3 gap-6">
+      {tools.map((t) => (
+        <a href={t.href} class="group block rounded-2xl bg-cream ring-1 ring-stone-200 hover:ring-teal-600/50 transition p-8">
+          <div class={`h-1 w-12 rounded-full mb-6 ${t.accent === 'gold' ? 'bg-gold-500' : 'bg-teal-600'}`}></div>
+          <h2 class="font-display text-2xl text-ink group-hover:text-teal-700 transition mb-3">{t.name}</h2>
+          <p class="text-stone-600 text-sm leading-relaxed">{t.desc}</p>
+          <p class="mt-6 text-xs uppercase tracking-widest text-teal-700">เริ่มคำนวณ →</p>
+        </a>
+      ))}
+    </div>
+  </section>
+</Layout>

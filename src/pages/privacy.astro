@@ -1,0 +1,61 @@
+---
+import Layout from '@layouts/Layout.astro';
+import { SITE } from '@lib/site';
+const locale = 'th' as const;
+---
+<Layout
+  title="นโยบายความเป็นส่วนตัว (PDPA) — feeninsure"
+  description="นโยบายการใช้ข้อมูลส่วนบุคคลของ feeninsure.com — เก็บข้อมูลเพียงเพื่อให้ตัวแทน Allianz Ayudhya (ฟีน — ชณิชา เศรษฐาอมร) ติดต่อกลับ ไม่แชร์บุคคลภายนอก"
+  locale={locale}
+>
+  <article class="container-narrow py-section">
+    <p class="text-xs uppercase tracking-[0.3em] text-teal-700 mb-6">PDPA</p>
+    <h1 class="text-display-lg font-display text-ink leading-[1.05] mb-10">นโยบายความเป็นส่วนตัว</h1>
+
+    <div class="prose-editorial">
+      <p class="text-stone-500">อัปเดตล่าสุด: 1 พฤษภาคม 2569</p>
+
+      <h2>เก็บข้อมูลอะไรบ้าง</h2>
+      <ul>
+        <li>ชื่อ เบอร์โทร / LINE ID อีเมล (ที่คุณกรอกในฟอร์ม)</li>
+        <li>อายุ เพศ และข้อมูลพื้นฐานสำหรับประมาณการเบี้ย</li>
+        <li>สิ่งที่คุณสนใจ (แผน คำตอบจากคำถามใน Find My Plan)</li>
+        <li>ข้อมูลทางเทคนิคพื้นฐาน (URL ที่เข้า, เวลา, browser)</li>
+      </ul>
+
+      <h2>ใช้ข้อมูลทำอะไร</h2>
+      <ul>
+        <li>เพื่อให้ ฟีน — {SITE.agent.nameTh} ติดต่อกลับและจัดทำใบเสนอราคา</li>
+        <li>เพื่อปรับปรุงเนื้อหาและประสบการณ์ของเว็บไซต์</li>
+        <li>เพื่อส่งข้อมูลที่เกี่ยวข้อง (เช่น PDF) ตามที่คุณอนุญาต</li>
+      </ul>
+
+      <h2>ไม่ทำอะไรกับข้อมูลของคุณ</h2>
+      <ul>
+        <li>ไม่ขายให้บุคคลภายนอก</li>
+        <li>ไม่แชร์ให้บริษัทอื่น (รวมถึงคู่แข่ง)</li>
+        <li>ไม่ส่งข้อมูลให้ Allianz Ayudhya โดยอัตโนมัติ — เฉพาะกรณีคุณตัดสินใจสมัครและกรอกใบสมัครจริงเท่านั้น</li>
+      </ul>
+
+      <h2>ระยะเวลาเก็บข้อมูล</h2>
+      <p>
+        เก็บไว้ไม่เกิน 2 ปี หลังการติดต่อครั้งล่าสุด หากคุณไม่ได้ตอบรับการนำเสนอแผน
+        ในกรณีที่ทำกรมธรรม์แล้ว ข้อมูลจะถูกเก็บตามเงื่อนไขของ Allianz Ayudhya และตามกฎหมาย
+      </p>
+
+      <h2>สิทธิ์ของคุณ</h2>
+      <p>
+        คุณสามารถขอ ดู แก้ไข หรือลบข้อมูลของคุณได้ทุกเมื่อ —
+        โดยติดต่อมาที่ <a href={`mailto:${SITE.contact.email || 'feen@feeninsure.com'}`}>{SITE.contact.email || 'feen@feeninsure.com'}</a>
+        หรือ LINE <a href={SITE.contact.line.deepLink}>{SITE.contact.line.id}</a>
+      </p>
+
+      <h2>ผู้รับผิดชอบข้อมูล</h2>
+      <p>
+        {SITE.agent.nameTh} ({SITE.agent.nickname}) — ตัวแทน {SITE.agent.company} ทีม {SITE.agent.team}<br/>
+        โทร: {SITE.contact.phoneDisplay}<br/>
+        LINE: {SITE.contact.line.id}
+      </p>
+    </div>
+  </article>
+</Layout>

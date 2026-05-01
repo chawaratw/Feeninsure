@@ -1,0 +1,146 @@
+---
+import Layout from '@layouts/Layout.astro';
+import LineCTA from '@components/LineCTA.astro';
+import { SITE } from '@lib/site';
+
+const locale = 'en' as const;
+
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  '@id': `${SITE.url}/#feen`,
+  name: SITE.agent.nameEn,
+  alternateName: [SITE.agent.nameTh, SITE.agent.nickname, 'Feen'],
+  jobTitle: SITE.agent.titleEn,
+  worksFor: { '@type': 'Organization', name: SITE.agent.company, url: SITE.allianz.home },
+  affiliation: { '@type': 'Organization', name: SITE.agent.team },
+  url: `${SITE.url}/en/about`,
+  telephone: `+66${SITE.contact.phone.replace(/^0/, '')}`,
+  knowsLanguage: ['th', 'en'],
+};
+---
+<Layout
+  title="About Feen — Allianz Ayudhya HNW agent | feeninsure"
+  description="Feen — Chanicha Setha-amorn. 5+ years as a HNW real estate agent, now a certified Allianz Ayudhya life and health insurance agent. One advisor for both wealth and protection."
+  locale={locale}
+  jsonLd={personSchema}
+>
+  {/* Hero */}
+  <section class="container-wide pt-section pb-16 lg:pb-24">
+    <div class="grid lg:grid-cols-12 gap-12 items-end">
+      <div class="lg:col-span-7">
+        <p class="text-xs uppercase tracking-[0.3em] text-teal-700 mb-6">About</p>
+        <h1 class="font-display text-display-xl text-ink leading-[1] mb-8">
+          Feen —<br/>
+          A two-sided<br/>
+          <span class="italic text-teal-700">advisor.</span>
+        </h1>
+        <p class="text-xl text-stone-600 leading-relaxed max-w-prose-narrow">
+          5 years in HNW real estate · 1 Allianz Ayudhya insurance license · 1 advisor who actually understands HNW life.
+        </p>
+      </div>
+      <aside class="lg:col-span-5">
+        <dl class="grid grid-cols-2 gap-6 text-sm rounded-3xl bg-stone-100 p-8 ring-1 ring-stone-200">
+          <div>
+            <dt class="text-xs uppercase tracking-widest text-stone-400 mb-1">Real estate</dt>
+            <dd class="font-medium text-ink">5+ years</dd>
+          </div>
+          <div>
+            <dt class="text-xs uppercase tracking-widest text-stone-400 mb-1">Insurance carrier</dt>
+            <dd class="font-medium text-ink">{SITE.agent.company.replace(' Assurance PCL.', '')}</dd>
+          </div>
+          <div>
+            <dt class="text-xs uppercase tracking-widest text-stone-400 mb-1">Team</dt>
+            <dd class="font-medium text-ink">{SITE.agent.team}</dd>
+          </div>
+          <div>
+            <dt class="text-xs uppercase tracking-widest text-stone-400 mb-1">Languages</dt>
+            <dd class="font-medium text-ink">Thai · English</dd>
+          </div>
+        </dl>
+      </aside>
+    </div>
+  </section>
+
+  {/* Body */}
+  <section class="bg-stone-100/50">
+    <article class="container-narrow py-section prose-editorial mx-auto">
+      <h2>Origin — in luxury condos</h2>
+      <p>
+        Feen spent her first 5+ professional years as a <strong>HNW real estate agent</strong> —
+        helping affluent Thai and expat clients buy, sell, and rent luxury condos, single-family homes,
+        and investment properties. The clientele was Premium to HNW.
+      </p>
+      <p>
+        Working with that clientele day in, day out, Feen noticed a pattern — HNW clients
+        <em>plan their assets meticulously</em>, but <em>plan their health and life insurance loosely</em>,
+        often using policies bought a decade earlier and never refreshed against current net worth or lifestyle.
+      </p>
+
+      <h2>The question that changed her path</h2>
+      <p>
+        Many of her clients asked the same thing —
+        <em>"Feen, where should we get health and life insurance for people in our bracket? Which plans?"</em>
+      </p>
+      <p>
+        At first she just referred them to agent friends, but after watching too many HNW clients
+        end up with <em>poorly fitted policies</em> — coverage that was insufficient, hospital networks
+        that didn't match their life, products that maximized agent commission rather than protection —
+        she got <strong>Allianz Ayudhya certified</strong> so she could advise properly herself.
+      </p>
+
+      <h2>Why Allianz Ayudhya</h2>
+      <p>From comparing carriers, she found Allianz Ayudhya has specific strengths for HNW clients:</p>
+      <ul>
+        <li><strong>The highest annual coverage in Thailand</strong> — First Class Ultra Beyond Platinum reaches ฿120M/year</li>
+        <li><strong>Strong BDMS network integration</strong> — the hospital chain HNW clients actually use</li>
+        <li><strong>Capital + global stability</strong> — Allianz Group is a Top 5 insurer worldwide</li>
+        <li><strong>Full Wealth + Protection range</strong> — health, critical illness, Unit Link, retirement, legacy</li>
+      </ul>
+
+      <h2>One advisor — both sides of HNW life</h2>
+      <p>
+        Today Feen is a rare advisor who serves both <strong>the asset side</strong> (HNW real estate) and
+        <strong>the protection side</strong> (Allianz Ayudhya life and health) — most agents specialize
+        in one or the other.
+      </p>
+      <p>
+        The advantage: when planning your overall financial picture, she understands both at once —
+        the assets that need protecting, the cash flow that pays premium each month, the tax position
+        that needs structuring. Not two advisors who don't talk to each other.
+      </p>
+
+      <h2>How Feen works</h2>
+      <ul>
+        <li><strong>Free, no-pressure consult</strong> — 15–30 min via LINE or Zoom</li>
+        <li><strong>Needs analysis first</strong> — full picture before any product proposal</li>
+        <li><strong>Allianz portfolio matched</strong> — the plan that fits, not the highest commission</li>
+        <li><strong>Lifetime after-sales</strong> — claims, annual reviews, plan adjustments as life changes</li>
+        <li><strong>Tax planning</strong> — especially Nov–Jan, max out deductions</li>
+      </ul>
+
+      <blockquote>
+        The best plan is the one you understand and that fits your actual life — not the most expensive,
+        not the cheapest.
+      </blockquote>
+    </article>
+  </section>
+
+  {/* CTA */}
+  <section class="container-wide py-section">
+    <div class="rounded-3xl bg-teal-600 text-cream p-12 grid md:grid-cols-2 gap-8 items-center">
+      <div>
+        <h2 class="text-display-md font-display">Let's talk</h2>
+        <p class="mt-3 text-cream/80 max-w-prose-narrow">
+          15 minutes — tell me what's on your mind, and I'll help structure a plan.
+        </p>
+      </div>
+      <div class="flex md:justify-end gap-3 flex-wrap">
+        <a href="/find-my-plan" class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-medium tracking-wide bg-cream text-teal-700 hover:bg-cream/90 transition">
+          Find My Plan quiz →
+        </a>
+        <LineCTA locale={locale} context="EN About consult" variant="ghost" class="border-cream/40 text-cream hover:bg-cream hover:text-teal-700" />
+      </div>
+    </div>
+  </section>
+</Layout>

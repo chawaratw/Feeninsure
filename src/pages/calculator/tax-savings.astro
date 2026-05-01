@@ -1,0 +1,118 @@
+---
+import Layout from '@layouts/Layout.astro';
+import LineCTA from '@components/LineCTA.astro';
+const locale = 'th' as const;
+---
+<Layout
+  title="คำนวณภาษีที่ประหยัดได้จากประกัน — feeninsure"
+  description="คำนวณว่าประกันชีวิตและประกันบำนาญลดภาษีให้คุณกี่บาท ตามฐานภาษีของคุณ — ใช้กฎกรมสรรพากร 2026"
+  locale={locale}
+>
+  <section class="container-wide py-section">
+    <header class="mb-12 max-w-prose-narrow">
+      <p class="text-xs uppercase tracking-[0.2em] text-teal-700 mb-6">เครื่องคำนวณ · ภาษี</p>
+      <h1 class="text-display-lg font-display text-ink mb-6">ลดหย่อนภาษีจากประกัน</h1>
+      <p class="text-stone-600 leading-relaxed">
+        เห็นภาพชัดทันที — ประกันที่คุณจ่ายอยู่ ลดภาษีให้กี่บาท
+        ใช้อัตราภาษีตามกรมสรรพากร 2026 (ภาษีเงินได้บุคคลธรรมดา)
+      </p>
+    </header>
+
+    <div class="grid lg:grid-cols-5 gap-10 max-w-5xl">
+      <form id="tax-form" class="lg:col-span-3 rounded-3xl bg-stone-100 p-8 ring-1 ring-stone-200 space-y-6">
+        <label class="block">
+          <span class="block text-xs uppercase tracking-widest text-stone-500 mb-2">รายได้สุทธิ/ปี (THB)</span>
+          <input id="income" type="number" min="0" step="10000" value="2000000"
+                 class="w-full rounded-lg border border-stone-200 bg-cream px-4 py-3 focus:outline-none focus:border-teal-600" />
+          <span class="text-xs text-stone-500 mt-1 block">หลังหักค่าใช้จ่ายและค่าลดหย่อนพื้นฐานแล้ว</span>
+        </label>
+
+        <label class="block">
+          <span class="block text-xs uppercase tracking-widest text-stone-500 mb-2">เบี้ยประกันชีวิต/ปี</span>
+          <input id="life" type="number" min="0" step="1000" value="80000"
+                 class="w-full rounded-lg border border-stone-200 bg-cream px-4 py-3 focus:outline-none focus:border-teal-600" />
+          <span class="text-xs text-stone-500 mt-1 block">ลดหย่อนได้สูงสุด ฿100,000</span>
+        </label>
+
+        <label class="block">
+          <span class="block text-xs uppercase tracking-widest text-stone-500 mb-2">เบี้ยประกันบำนาญ/ปี</span>
+          <input id="pension" type="number" min="0" step="1000" value="100000"
+                 class="w-full rounded-lg border border-stone-200 bg-cream px-4 py-3 focus:outline-none focus:border-teal-600" />
+          <span class="text-xs text-stone-500 mt-1 block">ลดหย่อนเพิ่มได้สูงสุด ฿200,000 (15% ของรายได้)</span>
+        </label>
+
+        <label class="block">
+          <span class="block text-xs uppercase tracking-widest text-stone-500 mb-2">เบี้ยประกันสุขภาพ/ปี</span>
+          <input id="health" type="number" min="0" step="1000" value="60000"
+                 class="w-full rounded-lg border border-stone-200 bg-cream px-4 py-3 focus:outline-none focus:border-teal-600" />
+          <span class="text-xs text-stone-500 mt-1 block">ลดหย่อนได้สูงสุด ฿25,000 (รวมกับประกันชีวิตไม่เกิน ฿100,000)</span>
+        </label>
+      </form>
+
+      <aside class="lg:col-span-2">
+        <div class="sticky top-24 rounded-3xl bg-teal-600 text-cream p-8">
+          <p class="text-xs uppercase tracking-widest text-cream/70 mb-3">คุณประหยัดภาษีได้</p>
+          <p class="font-display text-display-lg leading-none mb-2"><span id="result">฿—</span></p>
+          <p class="text-cream/80 text-sm mb-6">ต่อปี (อัตราภาษีของคุณ: <span id="rate">—</span>%)</p>
+          <ul id="breakdown" class="text-xs text-cream/80 space-y-1 mb-6"></ul>
+          <LineCTA locale={locale} context="ขอแผนลดภาษี" label="วางแผนลดภาษีกับฟีน" class="w-full" />
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <script is:inline>
+    (function () {
+      // 2026 Thai personal income tax brackets (illustrative — verify with กรมสรรพากร)
+      const brackets = [
+        [150000, 0],
+        [300000, 0.05],
+        [500000, 0.10],
+        [750000, 0.15],
+        [1000000, 0.20],
+        [2000000, 0.25],
+        [5000000, 0.30],
+        [Infinity, 0.35],
+      ];
+      function tax(income) {
+        let t = 0, prev = 0;
+        for (const [cap, rate] of brackets) {
+          if (income <= cap) { t += (income - prev) * rate; return t; }
+          t += (cap - prev) * rate;
+          prev = cap;
+        }
+        return t;
+      }
+      function marginal(income) {
+        let prev = 0;
+        for (const [cap, rate] of brackets) { if (income <= cap) return rate; prev = cap; }
+        return 0.35;
+      }
+      const fmt = (n) => '฿' + Math.round(n).toLocaleString('en-US');
+
+      function compute() {
+        const income = +document.getElementById('income').value || 0;
+        const life = Math.min(+document.getElementById('life').value || 0, 100000);
+        const health = Math.min(+document.getElementById('health').value || 0, 25000);
+        const lifeHealth = Math.min(life + health, 100000);
+        const pensionCap = Math.min(income * 0.15, 200000);
+        const pension = Math.min(+document.getElementById('pension').value || 0, pensionCap);
+
+        const totalDeduct = lifeHealth + pension;
+        const taxBefore = tax(income);
+        const taxAfter = tax(Math.max(0, income - totalDeduct));
+        const saved = taxBefore - taxAfter;
+        const rate = marginal(income) * 100;
+
+        document.getElementById('result').textContent = fmt(saved);
+        document.getElementById('rate').textContent = rate.toFixed(0);
+        document.getElementById('breakdown').innerHTML =
+          '<li>ประกันชีวิต+สุขภาพ: ' + fmt(lifeHealth) + '</li>' +
+          '<li>ประกันบำนาญ: ' + fmt(pension) + '</li>' +
+          '<li class="pt-2 border-t border-cream/20 mt-2">รวมลดหย่อน: ' + fmt(totalDeduct) + '</li>';
+      }
+      document.getElementById('tax-form').addEventListener('input', compute);
+      compute();
+    })();
+  </script>
+</Layout>

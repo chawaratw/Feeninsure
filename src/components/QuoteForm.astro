@@ -1,0 +1,178 @@
+---
+// Shared lead-capture form. Used on every product page (item 7) and on
+// /find-my-plan/result (item 8). Hidden fields preserve context so Feen's
+// follow-up call already has product, locale, page, and quiz-answer state.
+//
+// Submission flow: POST → Formspree → Google Sheet + email → /thank-you redirect.
+// Replace REPLACE_WITH_FORM_ID with real Formspree form ID before launch.
+import type { Locale } from '@lib/site';
+import { SITE } from '@lib/site';
+
+interface Props {
+  locale: Locale;
+  productSlug?: string;          // pre-fill "interested in" when used on product page
+  productName?: string;
+  source?: string;               // analytics tag — e.g., "product-page" or "quiz-result"
+  hiddenContext?: Record<string, string | number | undefined>;  // quiz answers, etc.
+  variant?: 'card' | 'embed';    // card = stand-alone container, embed = no container
+  heading?: string;
+  subheading?: string;
+}
+
+const {
+  locale,
+  productSlug,
+  productName,
+  source = 'product-page',
+  hiddenContext = {},
+  variant = 'card',
+  heading,
+  subheading,
+} = Astro.props;
+
+const isTh = locale === 'th';
+
+const labels = isTh ? {
+  heading: heading ?? 'ขอใบเสนอราคา',
+  subheading: subheading ?? 'ฟีนจะตอบกลับใน 1 วันทำการ พร้อมราคาที่แม่นยำสำหรับโปรไฟล์คุณ',
+  name: 'ชื่อ',
+  contactMethod: 'ติดต่อกลับทาง',
+  contactValue: 'เบอร์โทร / LINE ID',
+  email: 'อีเมล (ถ้าต้องการรับ PDF)',
+  age: 'อายุ',
+  sex: 'เพศ',
+  female: 'หญิง',
+  male: 'ชาย',
+  forWhom: 'สำหรับใคร',
+  forSelf: 'ตัวเอง',
+  forSpouse: 'คู่ชีวิต',
+  forChild: 'ลูก',
+  forParent: 'พ่อแม่',
+  message: 'ข้อความ (ถ้ามี)',
+  consent: 'ยินยอมให้ฟีนติดต่อกลับ ตามนโยบาย',
+  privacyLink: 'PDPA',
+  submit: 'ส่งคำขอใบเสนอราคา',
+  fineprint: 'ข้อมูลของคุณจะถูกใช้เฉพาะเพื่อให้ฟีนติดต่อกลับ ไม่แชร์ให้บุคคลภายนอก',
+  productLabel: 'แผนที่สนใจ',
+} : {
+  heading: heading ?? 'Request a quote',
+  subheading: subheading ?? 'Feen replies within 1 business day with a quote tailored to your profile.',
+  name: 'Name',
+  contactMethod: 'Reach me by',
+  contactValue: 'Phone / LINE ID',
+  email: 'Email (optional, for PDF)',
+  age: 'Age',
+  sex: 'Sex',
+  female: 'Female',
+  male: 'Male',
+  forWhom: 'For whom',
+  forSelf: 'Myself',
+  forSpouse: 'Spouse',
+  forChild: 'Child',
+  forParent: 'Parent',
+  message: 'Message (optional)',
+  consent: 'I consent to be contacted, per the',
+  privacyLink: 'privacy policy',
+  submit: 'Send quote request',
+  fineprint: 'Your data is used only for Feen to follow up — never shared with third parties.',
+  productLabel: 'Plan',
+};
+
+const containerClass = variant === 'card'
+  ? 'rounded-3xl bg-stone-100 p-8 ring-1 ring-stone-200'
+  : '';
+---
+<form
+  method="post"
+  action="https://formspree.io/f/REPLACE_WITH_FORM_ID"
+  class={containerClass}
+  data-source={source}
+>
+  {(heading || subheading) && (
+    <header class="mb-6">
+      <h2 class="font-display text-2xl text-ink mb-2">{labels.heading}</h2>
+      <p class="text-sm text-stone-600">{labels.subheading}</p>
+    </header>
+  )}
+
+  {productName && (
+    <div class="mb-5 inline-flex items-center gap-2 text-xs uppercase tracking-widest bg-teal-50 text-teal-700 px-3 py-1.5 rounded-full">
+      <span class="opacity-70">{labels.productLabel}:</span>
+      <span class="font-medium normal-case tracking-normal">{productName}</span>
+    </div>
+  )}
+
+  <div class="grid sm:grid-cols-2 gap-4 mb-4">
+    <label class="block">
+      <span class="block text-xs uppercase tracking-widest text-stone-500 mb-2">{labels.name}*</span>
+      <input name="name" required class="w-full rounded-lg border border-stone-200 bg-cream px-4 py-3 focus:outline-none focus:border-teal-600" />
+    </label>
+    <label class="block">
+      <span class="block text-xs uppercase tracking-widest text-stone-500 mb-2">{labels.contactValue}*</span>
+      <input name="contact" required class="w-full rounded-lg border border-stone-200 bg-cream px-4 py-3 focus:outline-none focus:border-teal-600" />
+    </label>
+  </div>
+
+  <label class="block mb-4">
+    <span class="block text-xs uppercase tracking-widest text-stone-500 mb-2">{labels.email}</span>
+    <input type="email" name="email" class="w-full rounded-lg border border-stone-200 bg-cream px-4 py-3 focus:outline-none focus:border-teal-600" />
+  </label>
+
+  <div class="grid sm:grid-cols-2 gap-4 mb-4">
+    <label class="block">
+      <span class="block text-xs uppercase tracking-widest text-stone-500 mb-2">{labels.age}</span>
+      <input type="number" name="age" min="18" max="80" class="w-full rounded-lg border border-stone-200 bg-cream px-4 py-3 focus:outline-none focus:border-teal-600" />
+    </label>
+    <fieldset>
+      <legend class="block text-xs uppercase tracking-widest text-stone-500 mb-2">{labels.sex}</legend>
+      <div class="flex gap-2">
+        <label class="flex-1"><input type="radio" name="sex" value="f" class="peer hidden" />
+          <span class="block text-center px-3 py-3 rounded-lg border border-stone-200 peer-checked:border-teal-600 peer-checked:bg-cream peer-checked:text-teal-700 cursor-pointer text-sm">{labels.female}</span>
+        </label>
+        <label class="flex-1"><input type="radio" name="sex" value="m" class="peer hidden" />
+          <span class="block text-center px-3 py-3 rounded-lg border border-stone-200 peer-checked:border-teal-600 peer-checked:bg-cream peer-checked:text-teal-700 cursor-pointer text-sm">{labels.male}</span>
+        </label>
+      </div>
+    </fieldset>
+  </div>
+
+  <fieldset class="mb-4">
+    <legend class="block text-xs uppercase tracking-widest text-stone-500 mb-2">{labels.forWhom}</legend>
+    <div class="flex flex-wrap gap-2">
+      {[['self', labels.forSelf], ['spouse', labels.forSpouse], ['child', labels.forChild], ['parent', labels.forParent]].map(([v, l]) => (
+        <label>
+          <input type="checkbox" name="for[]" value={v} class="peer hidden" />
+          <span class="inline-block px-4 py-2 rounded-full border border-stone-200 peer-checked:border-teal-600 peer-checked:bg-teal-50 peer-checked:text-teal-700 cursor-pointer text-sm transition">{l}</span>
+        </label>
+      ))}
+    </div>
+  </fieldset>
+
+  <label class="block mb-5">
+    <span class="block text-xs uppercase tracking-widest text-stone-500 mb-2">{labels.message}</span>
+    <textarea name="message" rows="3" class="w-full rounded-lg border border-stone-200 bg-cream px-4 py-3 focus:outline-none focus:border-teal-600"></textarea>
+  </label>
+
+  <label class="flex items-start gap-3 mb-5 text-sm text-stone-600">
+    <input type="checkbox" name="consent" required class="mt-1 accent-teal-600" />
+    <span>
+      {labels.consent}
+      <a href={isTh ? '/privacy' : '/en/privacy'} class="text-teal-700 underline underline-offset-2">{labels.privacyLink}</a>
+    </span>
+  </label>
+
+  {/* Hidden context — gives Feen the full picture before her follow-up call */}
+  {productSlug && <input type="hidden" name="product_slug" value={productSlug} />}
+  {productName && <input type="hidden" name="product_name" value={productName} />}
+  <input type="hidden" name="source" value={source} />
+  <input type="hidden" name="locale" value={locale} />
+  <input type="hidden" name="page_url" value={Astro.url.pathname} />
+  <input type="hidden" name="_subject" value={`feeninsure lead — ${productName ?? source}`} />
+  <input type="hidden" name="_next" value={`${SITE.url}/thank-you?product=${productSlug ?? ''}`} />
+  {Object.entries(hiddenContext).filter(([, v]) => v !== undefined).map(([k, v]) => (
+    <input type="hidden" name={k} value={String(v)} />
+  ))}
+
+  <button type="submit" class="btn-primary w-full">{labels.submit}</button>
+  <p class="mt-4 text-xs text-stone-500 leading-relaxed">{labels.fineprint}</p>
+</form>

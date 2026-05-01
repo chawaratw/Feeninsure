@@ -1,0 +1,27 @@
+---
+// Reusable LINE-deeplink CTA. Pass `context` to prefill the message a user sees
+// when LINE opens — drives lead quality (we know which product they were viewing).
+import { SITE, type Locale } from '@lib/site';
+import { t } from '@i18n/strings';
+
+interface Props {
+  locale: Locale;
+  context?: string;            // e.g. product slug, used to label the lead
+  variant?: 'primary' | 'ghost';
+  label?: string;              // override default label
+  class?: string;
+}
+
+const { locale, context, variant = 'primary', label, class: className = '' } = Astro.props;
+
+// LINE deep-link with prefilled greeting via the LINE OA chat URL.
+// Real LIFF integration (carrying form-state) goes in /contact via SDK.
+const greeting = locale === 'th'
+  ? `สวัสดีค่ะ ฟีน ฉันสนใจ${context ? ` ${context}` : 'แผนประกัน'}`
+  : `Hi Feen, I'm interested in${context ? ` ${context}` : ' your plans'}`;
+const href = `${SITE.contact.line.deepLink}?text=${encodeURIComponent(greeting)}`;
+const cls = variant === 'primary' ? 'btn-primary' : 'btn-ghost';
+---
+<a href={href} class={`${cls} ${className}`} rel="noopener" data-cta="line" data-context={context}>
+  {label ?? t('cta.consult', locale)}
+</a>

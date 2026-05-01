@@ -1,0 +1,155 @@
+---
+// Substantive product details table. Reads from frontmatter `details` block.
+// Designed so a HNW prospect can decide (or prepare questions) without leaving
+// for the official Allianz site.
+import type { CollectionEntry } from 'astro:content';
+
+interface Props { product: CollectionEntry<'products'> }
+const { product } = Astro.props;
+const d = product.data.details;
+if (!d) return null as any;
+
+const hasMeta = d.renewalAge || d.hospitalNetwork || d.coPayment ||
+                d.issueAge || d.premiumPaymentPeriod || d.coverageDuration ||
+                d.taxDeductible;
+---
+<section class="container-wide py-section">
+  <header class="mb-12 max-w-prose-narrow">
+    <p class="text-xs uppercase tracking-[0.3em] text-teal-700 mb-4">รายละเอียดแบบเต็ม</p>
+    <h2 class="text-display-md font-display text-ink leading-[1.05]">
+      ทุกข้อมูลที่ต้องรู้ — <span class="italic">ก่อนสมัคร</span>
+    </h2>
+    <p class="mt-4 text-stone-600">
+      ข้อมูลนี้สรุปจากเอกสารทางการของ Allianz Ayudhya เพื่อให้คุณตัดสินใจได้โดยไม่ต้องเปิดหลายแท็บ
+      สำหรับเงื่อนไขที่ผูกพันทุกประการ ดูที่ <a href={product.data.allianzUrl} target="_blank" rel="noopener noreferrer" class="text-teal-700 underline underline-offset-4">เอกสารทางการ</a>
+    </p>
+  </header>
+
+  {/* Meta strip — quick-glance facts */}
+  {hasMeta && (
+    <dl class="grid sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-6 mb-16 border-y border-stone-200 py-8">
+      {d.issueAge && (
+        <div>
+          <dt class="text-xs uppercase tracking-widest text-stone-400 mb-1.5">อายุที่สมัครได้</dt>
+          <dd class="font-medium text-ink">{d.issueAge}</dd>
+        </div>
+      )}
+      {d.renewalAge && (
+        <div>
+          <dt class="text-xs uppercase tracking-widest text-stone-400 mb-1.5">ต่ออายุได้ถึง</dt>
+          <dd class="font-medium text-ink">{d.renewalAge}</dd>
+        </div>
+      )}
+      {d.coverageDuration && (
+        <div>
+          <dt class="text-xs uppercase tracking-widest text-stone-400 mb-1.5">ระยะเวลาคุ้มครอง</dt>
+          <dd class="font-medium text-ink">{d.coverageDuration}</dd>
+        </div>
+      )}
+      {d.premiumPaymentPeriod && (
+        <div>
+          <dt class="text-xs uppercase tracking-widest text-stone-400 mb-1.5">จ่ายเบี้ย</dt>
+          <dd class="font-medium text-ink">{d.premiumPaymentPeriod}</dd>
+        </div>
+      )}
+      {d.hospitalNetwork && (
+        <div>
+          <dt class="text-xs uppercase tracking-widest text-stone-400 mb-1.5">เครือโรงพยาบาล</dt>
+          <dd class="font-medium text-ink">{d.hospitalNetwork}</dd>
+        </div>
+      )}
+      {d.coPayment && (
+        <div>
+          <dt class="text-xs uppercase tracking-widest text-stone-400 mb-1.5">Co-payment</dt>
+          <dd class="font-medium text-ink">{d.coPayment}</dd>
+        </div>
+      )}
+      {d.taxDeductible && (
+        <div class="sm:col-span-2">
+          <dt class="text-xs uppercase tracking-widest text-stone-400 mb-1.5">ลดหย่อนภาษี</dt>
+          <dd class="font-medium text-ink">{d.taxDeductible}</dd>
+        </div>
+      )}
+    </dl>
+  )}
+
+  {/* Plan tier comparison */}
+  {d.planTiers && d.planTiers.length > 0 && (
+    <div class="mb-16">
+      <h3 class="font-display text-2xl text-ink mb-6">เทียบระดับแผน</h3>
+      <div class="overflow-x-auto -mx-6 px-6">
+        <table class="min-w-full text-left">
+          <thead>
+            <tr class="border-b border-stone-200">
+              <th class="text-xs uppercase tracking-widest text-stone-400 pb-3 pr-6 font-normal">ระดับ</th>
+              <th class="text-xs uppercase tracking-widest text-stone-400 pb-3 pr-6 font-normal">วงเงิน</th>
+              <th class="text-xs uppercase tracking-widest text-stone-400 pb-3 pr-6 font-normal">เหมาะกับ</th>
+              <th class="text-xs uppercase tracking-widest text-stone-400 pb-3 font-normal">หมายเหตุ</th>
+            </tr>
+          </thead>
+          <tbody>
+            {d.planTiers.map((tier) => (
+              <tr class="border-b border-stone-200 last:border-0">
+                <td class="py-5 pr-6 font-display text-lg text-ink">{tier.name}</td>
+                <td class="py-5 pr-6 text-stone-700">{tier.coverage}</td>
+                <td class="py-5 pr-6 text-stone-600 text-sm">{tier.bestFor ?? '—'}</td>
+                <td class="py-5 text-stone-600 text-sm">{tier.notes ?? '—'}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  )}
+
+  {/* What's covered / what's not */}
+  {(d.whatsCovered || d.whatsNotCovered) && (
+    <div class="grid lg:grid-cols-2 gap-10 mb-16">
+      {d.whatsCovered && (
+        <div>
+          <h3 class="font-display text-2xl text-ink mb-5">
+            <span class="text-teal-600">✓</span> คุ้มครอง
+          </h3>
+          <ul class="space-y-3">
+            {d.whatsCovered.map((item) => (
+              <li class="flex gap-3 text-stone-700 leading-relaxed">
+                <span class="text-teal-600 mt-1 shrink-0">·</span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+      {d.whatsNotCovered && (
+        <div>
+          <h3 class="font-display text-2xl text-ink mb-5">
+            <span class="text-stone-400">×</span> ไม่คุ้มครอง
+          </h3>
+          <ul class="space-y-3">
+            {d.whatsNotCovered.map((item) => (
+              <li class="flex gap-3 text-stone-600 leading-relaxed">
+                <span class="text-stone-400 mt-1 shrink-0">·</span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
+  )}
+
+  {/* Waiting periods */}
+  {d.waitingPeriods && d.waitingPeriods.length > 0 && (
+    <div>
+      <h3 class="font-display text-2xl text-ink mb-5">ระยะรอคอย</h3>
+      <dl class="grid sm:grid-cols-2 gap-x-8 gap-y-3 max-w-2xl">
+        {d.waitingPeriods.map((w) => (
+          <div class="flex justify-between gap-4 py-2 border-b border-stone-200">
+            <dt class="text-stone-700">{w.item}</dt>
+            <dd class="font-medium text-ink shrink-0">{w.period}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  )}
+</section>

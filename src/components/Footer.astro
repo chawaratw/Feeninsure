@@ -1,0 +1,49 @@
+---
+import { SITE, type Locale } from '@lib/site';
+import { t } from '@i18n/strings';
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const year = new Date().getFullYear();
+const base = locale === 'en' ? '/en' : '';
+---
+<footer class="mt-section border-t border-stone-200 bg-stone-100">
+  <div class="container-wide grid gap-12 lg:grid-cols-4 py-16">
+    <div class="lg:col-span-2">
+      <p class="font-display text-2xl tracking-tight">
+        <span class="text-teal-600">feen</span>insure
+      </p>
+      <p class="mt-3 max-w-md text-sm text-stone-600 leading-relaxed">
+        {t('footer.disclaimer', locale)}
+      </p>
+    </div>
+
+    <div>
+      <h4 class="text-xs uppercase tracking-widest text-stone-400 mb-4">{locale === 'th' ? 'ติดต่อ' : 'Contact'}</h4>
+      <ul class="space-y-2 text-sm text-stone-700">
+        <li><a href={`tel:+66${SITE.contact.phone.replace(/^0/, '')}`} class="hover:text-teal-700">{SITE.contact.phoneDisplay}</a></li>
+        <li><a href={SITE.contact.line.deepLink} class="hover:text-teal-700">LINE: {SITE.contact.line.id}</a></li>
+        <li class="text-stone-500">{SITE.contact.address}</li>
+      </ul>
+    </div>
+
+    <div>
+      <h4 class="text-xs uppercase tracking-widest text-stone-400 mb-4">{locale === 'th' ? 'ตามอ่าน' : 'Follow'}</h4>
+      <ul class="space-y-2 text-sm text-stone-700">
+        <li><a href={SITE.social.facebook} class="hover:text-teal-700" rel="noopener">Facebook</a></li>
+        <li><a href={SITE.social.instagram} class="hover:text-teal-700" rel="noopener">Instagram</a></li>
+        <li><a href={SITE.social.tiktok} class="hover:text-teal-700" rel="noopener">TikTok</a></li>
+        <li><a href={SITE.social.youtube} class="hover:text-teal-700" rel="noopener">YouTube</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="rule">
+    <div class="container-wide py-6 flex flex-col md:flex-row md:justify-between gap-2 text-xs text-stone-500">
+      <p>© {year} {SITE.brand.short}. {t('footer.rights', locale)}.</p>
+      <p>
+        {SITE.agent.nameTh} · {SITE.agent.title}
+      </p>
+    </div>
+  </div>
+</footer>
