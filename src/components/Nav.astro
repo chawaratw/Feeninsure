@@ -4,27 +4,26 @@ import { t } from '@i18n/strings';
 
 interface Props { locale: Locale }
 const { locale } = Astro.props;
-const base = locale === 'en' ? '/en' : '';
+const siteBase = import.meta.env.BASE_URL.replace(/\/$/, '');
+const base = locale === 'en' ? `${siteBase}/en` : siteBase;
 
-// Find My Plan is only built in TH for now — link goes to TH page from EN nav too.
 const links = [
   { href: `${base}/`, key: 'nav.home' as const },
-  { href: '/find-my-plan', key: 'nav.findMyPlan' as const, highlight: true },
+  { href: `${siteBase}/find-my-plan`, key: 'nav.findMyPlan' as const, highlight: true },
   { href: `${base}/products`, key: 'nav.products' as const },
   { href: `${base}/blog`, key: 'nav.blog' as const },
   { href: `${base}/about`, key: 'nav.about' as const },
 ];
 
-// EN site is incomplete — only show TH↔EN switch on pages that have an EN version.
-// Add paths here as EN versions ship.
 const EN_AVAILABLE = new Set<string>(['/', '/about', '/contact']);
-const cleanPath = Astro.url.pathname.replace(/^\/en/, '') || '/';
+const relPath = Astro.url.pathname.replace(siteBase, '') || '/';
+const cleanPath = relPath.replace(/^\/en/, '') || '/';
 const showLocaleToggle = EN_AVAILABLE.has(cleanPath);
 
 const altLocale: Locale = locale === 'th' ? 'en' : 'th';
 const altHref = locale === 'th'
-  ? `/en${Astro.url.pathname === '/' ? '' : Astro.url.pathname}`
-  : Astro.url.pathname.replace(/^\/en/, '') || '/';
+  ? `${siteBase}/en${relPath === '/' ? '' : relPath}`
+  : `${siteBase}${relPath.replace(/^\/en/, '') || '/'}`;
 ---
 <header class="border-b border-stone-200 bg-cream/85 backdrop-blur sticky top-0 z-40">
   <nav class="container-wide flex items-center justify-between py-5" aria-label="Primary">

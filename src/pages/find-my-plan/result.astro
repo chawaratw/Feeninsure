@@ -28,7 +28,7 @@ const productData = allProducts.map((p) => ({
 >
   {/* Hero — generic; JS swaps the photo based on quiz concern */}
   <section id="result-hero" class="relative h-[50vh] min-h-[380px] max-h-[560px] overflow-hidden -mt-[1px]">
-    <img id="hero-img" src="/images/lifestyle/sailor.jpg" alt="ผลการค้นหาแผน" class="absolute inset-0 h-full w-full object-cover" />
+    <img id="hero-img" src={import.meta.env.BASE_URL + 'images/lifestyle/sailor.jpg'} alt="ผลการค้นหาแผน" class="absolute inset-0 h-full w-full object-cover" />
     <div class="absolute inset-0 bg-gradient-to-b from-ink/30 via-ink/40 to-ink/80"></div>
     <div class="relative h-full container-wide flex flex-col justify-end pb-12 text-cream">
       <p class="text-xs uppercase tracking-[0.3em] mb-4 opacity-80">Find My Plan · ผลลัพธ์</p>
@@ -48,7 +48,7 @@ const productData = allProducts.map((p) => ({
       <div><dt class="text-xs uppercase tracking-widest text-stone-400 mb-1">โรงพยาบาล</dt><dd class="font-medium text-ink" id="r-hospital">—</dd></div>
     </div>
     <div class="container-wide pb-6">
-      <a href="/find-my-plan" class="text-xs uppercase tracking-widest text-teal-700 hover:text-teal-900">← แก้ไขคำตอบ</a>
+      <a href={import.meta.env.BASE_URL + 'find-my-plan'} class="text-xs uppercase tracking-widest text-teal-700 hover:text-teal-900">← แก้ไขคำตอบ</a>
     </div>
   </section>
 
@@ -68,7 +68,7 @@ const productData = allProducts.map((p) => ({
     <noscript>
       <p class="mt-12 text-center text-stone-700">
         ต้องเปิด JavaScript เพื่อดูแผนที่แนะนำ —
-        หรือ <a href="/products" class="text-teal-700 underline">ดูแผนทั้ง 8</a> ·
+        หรือ <a href={import.meta.env.BASE_URL + 'products'} class="text-teal-700 underline">ดูแผนทั้ง 8</a> ·
         <a href="#consult" class="text-teal-700 underline">ปรึกษาฟีนทาง LINE</a>
       </p>
     </noscript>
@@ -167,13 +167,14 @@ const productData = allProducts.map((p) => ({
       const AGE_LABEL = { 'under-25':'< 25 ปี', '25-34':'25-34 ปี', '35-44':'35-44 ปี', '45-54':'45-54 ปี', '55-plus':'55+ ปี' };
       const BUDGET_LABEL = { 'under-50k':'< ฿50K/ปี', '50k-150k':'฿50–150K/ปี', '150k-500k':'฿150–500K/ปี', 'over-500k':'> ฿500K/ปี' };
       const HOSPITAL_LABEL = { 'bdms':'เครือ BDMS', 'any-thai':'ทั่วประเทศ', 'worldwide':'ต่างประเทศบ่อย', 'not-applicable':'—' };
+      const BASE = import.meta.env.BASE_URL;
       const HERO_PHOTOS = {
-        'comprehensive-health': '/images/lifestyle/sailor.jpg',
-        'critical-illness': '/images/lifestyle/friends-sunset.jpg',
-        'retirement': '/images/lifestyle/car-countryside.jpg',
-        'tax-deduction': '/images/lifestyle/couple-cadillac.jpg',
-        'wealth-building': '/images/lifestyle/boat-sunset.jpg',
-        'legacy': '/images/lifestyle/couple-cadillac.jpg',
+        'comprehensive-health': BASE + 'images/lifestyle/sailor.jpg',
+        'critical-illness': BASE + 'images/lifestyle/friends-sunset.jpg',
+        'retirement': BASE + 'images/lifestyle/car-countryside.jpg',
+        'tax-deduction': BASE + 'images/lifestyle/couple-cadillac.jpg',
+        'wealth-building': BASE + 'images/lifestyle/boat-sunset.jpg',
+        'legacy': BASE + 'images/lifestyle/couple-cadillac.jpg',
       };
       const ITEM_PHOTOS = ['boat-sunset', 'sailor', 'friends-sunset', 'couple-cadillac', 'car-countryside', 'seaside-friends'];
 
@@ -213,7 +214,7 @@ const productData = allProducts.map((p) => ({
 
       // If essentials missing, send back
       if (!params.has('for') || !params.has('concern') || !params.has('budget')) {
-        window.location.replace('/find-my-plan');
+        window.location.replace(import.meta.env.BASE_URL + 'find-my-plan');
         return;
       }
 
@@ -223,7 +224,7 @@ const productData = allProducts.map((p) => ({
       document.getElementById('r-age').textContent = AGE_LABEL[inputs.age] || '—';
       document.getElementById('r-budget').textContent = BUDGET_LABEL[inputs.budget] || '—';
       document.getElementById('r-hospital').textContent = HOSPITAL_LABEL[inputs.hospital] || '—';
-      document.getElementById('hero-img').src = HERO_PHOTOS[inputs.concern] || '/images/lifestyle/sailor.jpg';
+      document.getElementById('hero-img').src = HERO_PHOTOS[inputs.concern] || BASE + 'images/lifestyle/sailor.jpg';
 
       // Run recommendations
       const recs = recommend(inputs);
@@ -237,7 +238,7 @@ const productData = allProducts.map((p) => ({
       const recsHtml = recs.map((r, i) => {
         const p = productMap[r.slug];
         if (!p) return '';
-        const img = '/images/lifestyle/' + ITEM_PHOTOS[i % ITEM_PHOTOS.length] + '.jpg';
+        const img = BASE + 'images/lifestyle/' + ITEM_PHOTOS[i % ITEM_PHOTOS.length] + '.jpg';
         const allianzBtn = p.allianzUrl
           ? `<a href="${escapeHtml(p.allianzUrl)}" target="_blank" rel="noopener noreferrer" class="btn-ghost text-sm">Allianz ทางการ ↗</a>`
           : '';
@@ -266,7 +267,7 @@ const productData = allProducts.map((p) => ({
                 </div>
               </dl>
               <div class="flex flex-wrap gap-3">
-                <a href="/products/${escapeHtml(p.slug)}" class="btn-primary text-sm">ดูรายละเอียดแผน →</a>
+                <a href="${BASE}products/${escapeHtml(p.slug)}" class="btn-primary text-sm">ดูรายละเอียดแผน →</a>
                 ${allianzBtn}
               </div>
             </div>

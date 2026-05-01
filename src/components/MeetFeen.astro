@@ -84,7 +84,7 @@ const isTh = locale === 'th';
       </div>
 
       <div class="mt-10 flex flex-wrap items-center gap-6">
-        <a href={isTh ? '/about' : '/en/about'} class="text-sm uppercase tracking-widest text-teal-700 hover:text-teal-900 inline-flex items-center gap-2">
+        <a href={import.meta.env.BASE_URL + (isTh ? 'about' : 'en/about')} class="text-sm uppercase tracking-widest text-teal-700 hover:text-teal-900 inline-flex items-center gap-2">
           {isTh ? 'อ่านเรื่องของฟีน' : 'Read Feen\'s story'} →
         </a>
         <span class="text-xs text-stone-400">

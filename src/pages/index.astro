@@ -5,13 +5,13 @@ import ProductCard from '@components/ProductCard.astro';
 import MeetFeen from '@components/MeetFeen.astro';
 import { SITE } from '@lib/site';
 import { t } from '@i18n/strings';
-import { asset } from '@lib/asset';
+import { asset, url } from '@lib/asset';
 
 const locale = 'th' as const;
 
 const featured = [
   {
-    href: '/products/first-class-ultra-bdms',
+    href: url('/products/first-class-ultra-bdms'),
     name: 'First Class Ultra @BDMS',
     audience: 'HNW · ครอบครัวร่ำรวย',
     coverage: 'สูงสุด ฿120 ล้าน/ปี',
@@ -21,7 +21,7 @@ const featured = [
     imageAlt: 'ผู้หญิงบนเรือยอชต์ตอนพระอาทิตย์ตก สื่อถึงการใช้ชีวิตอย่างเต็มที่',
   },
   {
-    href: '/products/double-care',
+    href: url('/products/double-care'),
     name: 'ปลดล็อค ดับเบิล แคร์',
     audience: 'กังวลโรคร้ายแรง',
     coverage: 'วงเงินเพิ่มเป็น 2 เท่าเมื่อโรคร้าย',
@@ -31,7 +31,7 @@ const featured = [
     imageAlt: 'เพื่อนสองคนนั่งบนรถออฟโรดยามพระอาทิตย์ตก',
   },
   {
-    href: '/products/multi-care',
+    href: url('/products/multi-care'),
     name: 'มัลติ แคร์',
     audience: 'ครอบครัวที่มีประวัติโรคร้าย',
     coverage: 'คุ้มครอง 81 โรค · เคลมซ้ำได้',
@@ -84,7 +84,7 @@ const homeSchema = {
         เพื่อให้คุณใช้ชีวิตได้เต็มที่ โดยไม่ต้องเสียสละสิ่งสำคัญในยามวิกฤต
       </p>
       <div class="mt-10 flex flex-wrap gap-4">
-        <a href="/find-my-plan" class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-medium tracking-wide bg-cream text-teal-700 hover:bg-cream/90 transition">
+        <a href={url('/find-my-plan')} class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-medium tracking-wide bg-cream text-teal-700 hover:bg-cream/90 transition">
           หาแผนที่ใช่สำหรับคุณ →
         </a>
         <LineCTA locale={locale} context="หน้าแรก" variant="ghost" class="border-cream/40 text-cream hover:bg-cream hover:text-teal-700" />
@@ -182,7 +182,7 @@ const homeSchema = {
         <p class="text-xs uppercase tracking-[0.3em] text-teal-700 mb-4">3 of 8 · {t('home.featured', locale)}</p>
         <h2 class="text-display-lg font-display text-ink leading-[1.05]">แผนที่<br/>เริ่มที่นี่</h2>
       </div>
-      <a href="/products" class="hidden md:inline-flex items-center gap-2 text-sm uppercase tracking-widest text-teal-700 hover:text-teal-900">
+      <a href={url('/products')} class="hidden md:inline-flex items-center gap-2 text-sm uppercase tracking-widest text-teal-700 hover:text-teal-900">
         ดูทั้งหมด →
       </a>
     </header>
@@ -253,8 +253,8 @@ const homeSchema = {
           <em>ใช่ที่สุด</em> สำหรับคุณ พร้อมส่ง PDF สรุปให้ทางอีเมล
         </p>
         <div class="flex flex-wrap gap-3">
-          <a href="/find-my-plan" class="btn-primary">เริ่มทำแบบสอบถาม →</a>
-          <a href="/products" class="btn-ghost">หรือดูทั้ง 8 แผน</a>
+          <a href={url('/find-my-plan')} class="btn-primary">เริ่มทำแบบสอบถาม →</a>
+          <a href={url('/products')} class="btn-ghost">หรือดูทั้ง 8 แผน</a>
         </div>
       </div>
       <figure class="relative aspect-[4/3] rounded-3xl overflow-hidden bg-teal-700">

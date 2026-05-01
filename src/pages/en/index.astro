@@ -4,38 +4,39 @@ import LineCTA from '@components/LineCTA.astro';
 import ProductCard from '@components/ProductCard.astro';
 import { SITE } from '@lib/site';
 import { t } from '@i18n/strings';
+import { asset, url } from '@lib/asset';
 
 const locale = 'en' as const;
 
 const featured = [
   {
-    href: '/en/products/first-class-ultra-bdms',
+    href: url('/en/products/first-class-ultra-bdms'),
     name: 'First Class Ultra @BDMS',
     audience: 'HNW · executive families',
     coverage: 'Up to ฿120M / year',
     badge: 'Top Plan',
     rating: 5 as const,
-    image: '/images/lifestyle/boat-sunset.jpg',
+    image: asset('/images/lifestyle/boat-sunset.jpg'),
     imageAlt: 'A premium life on the Mediterranean — feeninsure',
   },
   {
-    href: '/en/products/double-care',
+    href: url('/en/products/double-care'),
     name: 'Double Care (HSMHPDC)',
     audience: 'Concerned about critical illness',
     coverage: 'Coverage doubles on critical illness',
     badge: 'Most Online-Friendly',
     rating: 5 as const,
-    image: '/images/lifestyle/friends-sunset.jpg',
+    image: asset('/images/lifestyle/friends-sunset.jpg'),
     imageAlt: 'Friends on a vintage Bronco at sunset',
   },
   {
-    href: '/en/products/multi-care',
+    href: url('/en/products/multi-care'),
     name: 'Multi Care (CIMC)',
     audience: 'Families with critical illness history',
     coverage: '81 conditions · repeat claims',
     badge: 'Repeat Claims',
     rating: 4 as const,
-    image: '/images/lifestyle/sailor.jpg',
+    image: asset('/images/lifestyle/sailor.jpg'),
     imageAlt: 'A young man on a sailboat',
   },
 ];
@@ -58,7 +59,7 @@ const homeSchema = {
 >
   {/* HERO */}
   <section class="relative h-[90vh] min-h-[600px] max-h-[900px] overflow-hidden -mt-[1px]">
-    <img src="/images/lifestyle/boat-sunset.jpg" alt="A premium life by the sea" class="absolute inset-0 h-full w-full object-cover" fetchpriority="high" />
+    <img src={asset('/images/lifestyle/boat-sunset.jpg')} alt="A premium life by the sea" class="absolute inset-0 h-full w-full object-cover" fetchpriority="high" />
     <div class="absolute inset-0 bg-gradient-to-b from-ink/10 via-ink/30 to-ink/70"></div>
     <div class="relative h-full container-wide flex flex-col justify-end pb-16 lg:pb-24 text-cream">
       <p class="text-[10px] sm:text-xs uppercase tracking-[0.3em] mb-6 opacity-80">
@@ -75,7 +76,7 @@ const homeSchema = {
       </p>
       <div class="mt-10 flex flex-wrap gap-4">
         <LineCTA locale={locale} context="EN home" />
-        <a href="/en/products" class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-medium tracking-wide border border-cream/40 text-cream hover:bg-cream hover:text-ink transition">
+        <a href={url('/en/products')} class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-medium tracking-wide border border-cream/40 text-cream hover:bg-cream hover:text-ink transition">
           See all plans →
         </a>
       </div>
@@ -120,7 +121,7 @@ const homeSchema = {
     </div>
     <div class="container-wide grid grid-cols-12 gap-4 sm:gap-6">
       <figure class="col-span-12 lg:col-span-7 relative aspect-[4/3] lg:aspect-[5/4] overflow-hidden rounded-3xl">
-        <img src="/images/lifestyle/couple-cadillac.jpg" alt="A couple driving a vintage Cadillac" loading="lazy" class="absolute inset-0 h-full w-full object-cover" />
+        <img src={asset('/images/lifestyle/couple-cadillac.jpg')} alt="A couple driving a vintage Cadillac" loading="lazy" class="absolute inset-0 h-full w-full object-cover" />
         <figcaption class="absolute bottom-6 left-6 right-6 text-cream">
           <p class="text-xs uppercase tracking-[0.2em] mb-2 opacity-80">Travel</p>
           <p class="font-display text-2xl italic">"Family trips that don't get postponed by hospital bills."</p>
@@ -129,7 +130,7 @@ const homeSchema = {
       </figure>
       <div class="col-span-12 lg:col-span-5 grid grid-cols-1 gap-4 sm:gap-6">
         <figure class="relative aspect-[4/3] overflow-hidden rounded-3xl">
-          <img src="/images/lifestyle/seaside-friends.jpg" alt="Friends by the sea" loading="lazy" class="absolute inset-0 h-full w-full object-cover" />
+          <img src={asset('/images/lifestyle/seaside-friends.jpg')} alt="Friends by the sea" loading="lazy" class="absolute inset-0 h-full w-full object-cover" />
           <figcaption class="absolute bottom-6 left-6 right-6 text-cream">
             <p class="text-xs uppercase tracking-[0.2em] mb-2 opacity-80">Friendship</p>
             <p class="font-display text-xl italic">"Good moments don't get rescheduled."</p>
@@ -137,7 +138,7 @@ const homeSchema = {
           <div class="absolute inset-0 bg-gradient-to-t from-ink/60 via-transparent to-transparent"></div>
         </figure>
         <figure class="relative aspect-[4/3] overflow-hidden rounded-3xl">
-          <img src="/images/lifestyle/car-countryside.jpg" alt="A classic car in the countryside" loading="lazy" class="absolute inset-0 h-full w-full object-cover" />
+          <img src={asset('/images/lifestyle/car-countryside.jpg')} alt="A classic car in the countryside" loading="lazy" class="absolute inset-0 h-full w-full object-cover" />
           <figcaption class="absolute bottom-6 left-6 right-6 text-cream">
             <p class="text-xs uppercase tracking-[0.2em] mb-2 opacity-80">Freedom</p>
             <p class="font-display text-xl italic">"Always able to leave — never the bill stopping you."</p>
@@ -155,7 +156,7 @@ const homeSchema = {
         <p class="text-xs uppercase tracking-[0.3em] text-teal-700 mb-4">3 of 8 · {t('home.featured', locale)}</p>
         <h2 class="text-display-lg font-display text-ink leading-[1.05]">Start<br/>here.</h2>
       </div>
-      <a href="/en/products" class="hidden md:inline-flex items-center gap-2 text-sm uppercase tracking-widest text-teal-700 hover:text-teal-900">
+      <a href={url('/en/products')} class="hidden md:inline-flex items-center gap-2 text-sm uppercase tracking-widest text-teal-700 hover:text-teal-900">
         See all →
       </a>
     </header>

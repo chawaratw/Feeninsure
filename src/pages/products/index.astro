@@ -3,6 +3,7 @@ import Layout from '@layouts/Layout.astro';
 import ProductCard from '@components/ProductCard.astro';
 import { getCollection } from 'astro:content';
 import { SITE } from '@lib/site';
+import { url } from '@lib/asset';
 
 const locale = 'th' as const;
 const products = (await getCollection('products')).sort((a, b) => a.data.rank - b.data.rank);
@@ -40,7 +41,7 @@ const itemListSchema = {
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
       {products.map((p) => (
         <ProductCard
-          href={`/products/${p.slug}`}
+          href={url(`/products/${p.slug}`)}
           name={p.data.nameTh}
           audience={p.data.audienceTh}
           coverage={p.data.coverageTh}

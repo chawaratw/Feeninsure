@@ -2,21 +2,23 @@
 import Layout from '@layouts/Layout.astro';
 const locale = 'th' as const;
 
+import { url } from '@lib/asset';
+
 const tools = [
   {
-    href: '/calculator/health-premium',
+    href: url('/calculator/health-premium'),
     name: 'คำนวณเบี้ยประกันสุขภาพ',
     desc: 'ประมาณเบี้ยรายปีจาก อายุ เพศ และระดับวงเงินคุ้มครอง',
     accent: 'teal',
   },
   {
-    href: '/calculator/tax-savings',
+    href: url('/calculator/tax-savings'),
     name: 'คำนวณภาษีที่ประหยัดได้',
     desc: 'รายได้ของคุณ + เบี้ยประกัน → เห็นว่าลดหย่อนได้กี่บาท',
     accent: 'gold',
   },
   {
-    href: '/calculator/retirement',
+    href: url('/calculator/retirement'),
     name: 'คำนวณเงินเกษียณที่ต้องเตรียม',
     desc: 'อายุปัจจุบัน + ค่าใช้จ่าย → จำนวนทุนสุทธิที่ต้องสะสม',
     accent: 'teal',
