@@ -110,7 +110,7 @@ const productData = allProducts.map((p) => ({
 
   {/* All product data + recommendation logic + DOM update */}
   <script type="application/json" id="product-data" set:html={JSON.stringify(productData)} />
-  <script is:inline>
+  <script is:inline define:vars={{ BASE: import.meta.env.BASE_URL.replace(/\/?$/, '/') }}>
     (function () {
       // Recommendation engine (port of src/lib/find-plan.ts to inline JS)
       const CONCERN_SCORES = {
@@ -167,7 +167,6 @@ const productData = allProducts.map((p) => ({
       const AGE_LABEL = { 'under-25':'< 25 ปี', '25-34':'25-34 ปี', '35-44':'35-44 ปี', '45-54':'45-54 ปี', '55-plus':'55+ ปี' };
       const BUDGET_LABEL = { 'under-50k':'< ฿50K/ปี', '50k-150k':'฿50–150K/ปี', '150k-500k':'฿150–500K/ปี', 'over-500k':'> ฿500K/ปี' };
       const HOSPITAL_LABEL = { 'bdms':'เครือ BDMS', 'any-thai':'ทั่วประเทศ', 'worldwide':'ต่างประเทศบ่อย', 'not-applicable':'—' };
-      const BASE = import.meta.env.BASE_URL.replace(/\/?$/, '/');
       const HERO_PHOTOS = {
         'comprehensive-health': BASE + 'images/lifestyle/sailor.jpg',
         'critical-illness': BASE + 'images/lifestyle/friends-sunset.jpg',
@@ -214,7 +213,7 @@ const productData = allProducts.map((p) => ({
 
       // If essentials missing, send back
       if (!params.has('for') || !params.has('concern') || !params.has('budget')) {
-        window.location.replace(import.meta.env.BASE_URL.replace(/\/?$/, '/') + 'find-my-plan');
+        window.location.replace(BASE + 'find-my-plan');
         return;
       }
 

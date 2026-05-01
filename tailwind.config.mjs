@@ -29,9 +29,9 @@ export default {
         ink: '#1A1A1A',
       },
       fontFamily: {
-        // IBM Plex Sans Thai includes Latin glyphs — one body family covers TH + EN.
+        // IBM Plex Sans Thai = body, Anuphan = display/headings (both cover TH + EN).
         sans: ['"IBM Plex Sans Thai"', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'sans-serif'],
-        display: ['"Cormorant Garamond"', 'Georgia', 'Cambria', 'Times New Roman', 'serif'],
+        display: ['"Anuphan"', '"IBM Plex Sans Thai"', 'system-ui', 'sans-serif'],
         mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
       },
       fontSize: {

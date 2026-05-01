@@ -4,7 +4,7 @@
 
 /* Fonts: self-hosted from /public/fonts.
    IBM Plex Sans Thai = body (covers Thai + Latin glyphs in one family).
-   Cormorant Garamond = editorial display headlines.
+   Anuphan = display headlines (TH + EN, clean modern sans-serif).
    Self-hosted for: 1) reliable Thai rendering 2) PDPA-friendly (no third-party calls). */
 
 @font-face {
@@ -44,53 +44,39 @@
 }
 
 @font-face {
-  font-family: 'Cormorant Garamond';
+  font-family: 'Anuphan';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('/fonts/Anuphan-Light.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Anuphan';
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url('/fonts/CormorantGaramond-Regular.ttf') format('truetype');
+  src: url('/fonts/Anuphan-Regular.ttf') format('truetype');
 }
 @font-face {
-  font-family: 'Cormorant Garamond';
-  font-style: italic;
-  font-weight: 400;
-  font-display: swap;
-  src: url('/fonts/CormorantGaramond-Italic.ttf') format('truetype');
-}
-@font-face {
-  font-family: 'Cormorant Garamond';
+  font-family: 'Anuphan';
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url('/fonts/CormorantGaramond-Medium.ttf') format('truetype');
+  src: url('/fonts/Anuphan-Medium.ttf') format('truetype');
 }
 @font-face {
-  font-family: 'Cormorant Garamond';
-  font-style: italic;
-  font-weight: 500;
-  font-display: swap;
-  src: url('/fonts/CormorantGaramond-MediumItalic.ttf') format('truetype');
-}
-@font-face {
-  font-family: 'Cormorant Garamond';
+  font-family: 'Anuphan';
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url('/fonts/CormorantGaramond-SemiBold.ttf') format('truetype');
+  src: url('/fonts/Anuphan-SemiBold.ttf') format('truetype');
 }
 @font-face {
-  font-family: 'Cormorant Garamond';
+  font-family: 'Anuphan';
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url('/fonts/CormorantGaramond-Bold.ttf') format('truetype');
-}
-@font-face {
-  font-family: 'Cormorant Garamond';
-  font-style: italic;
-  font-weight: 700;
-  font-display: swap;
-  src: url('/fonts/CormorantGaramond-BoldItalic.ttf') format('truetype');
+  src: url('/fonts/Anuphan-Bold.ttf') format('truetype');
 }
 
 @layer base {

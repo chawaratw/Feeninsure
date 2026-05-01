@@ -80,9 +80,9 @@ const hasAlternate = EN_AVAILABLE.has(cleanPath);
     <link rel="apple-touch-icon" href={asset('icons/apple-touch-icon.png')} />
     <link rel="manifest" href={asset('manifest.webmanifest')} />
 
-    {/* Self-hosted fonts — preload the two most-used weights for fast first paint */}
+    {/* Self-hosted fonts — preload body + display for fast first paint */}
     <link rel="preload" href={asset('fonts/IBMPlexSansThai-Regular.ttf')} as="font" type="font/ttf" crossorigin />
-    <link rel="preload" href={asset('fonts/CormorantGaramond-SemiBold.ttf')} as="font" type="font/ttf" crossorigin />
+    <link rel="preload" href={asset('fonts/Anuphan-SemiBold.ttf')} as="font" type="font/ttf" crossorigin />
 
     {/* Schema.org: site-wide InsuranceAgent */}
     <SchemaInsuranceAgent />
