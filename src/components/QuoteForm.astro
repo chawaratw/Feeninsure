@@ -7,6 +7,7 @@
 // Replace REPLACE_WITH_FORM_ID with real Formspree form ID before launch.
 import type { Locale } from '@lib/site';
 import { SITE } from '@lib/site';
+import { url } from '@lib/asset';
 
 interface Props {
   locale: Locale;
@@ -157,7 +158,7 @@ const containerClass = variant === 'card'
     <input type="checkbox" name="consent" required class="mt-1 accent-teal-600" />
     <span>
       {labels.consent}
-      <a href={isTh ? '/privacy' : '/en/privacy'} class="text-teal-700 underline underline-offset-2">{labels.privacyLink}</a>
+      <a href={url(isTh ? '/privacy' : '/en/privacy')} class="text-teal-700 underline underline-offset-2">{labels.privacyLink}</a>
     </span>
   </label>
 

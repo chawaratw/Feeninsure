@@ -7,7 +7,7 @@ import ProductDetailsTable from '@components/ProductDetailsTable.astro';
 import QuoteForm from '@components/QuoteForm.astro';
 import { getCollection, type CollectionEntry } from 'astro:content';
 import { SITE } from '@lib/site';
-import { asset } from '@lib/asset';
+import { asset, url } from '@lib/asset';
 
 export async function getStaticPaths() {
   const products = await getCollection('products');
@@ -74,9 +74,9 @@ const metaDesc = `${data.taglineTh} เหมาะกับ ${data.audienceTh} 
     <div class="absolute inset-0 bg-gradient-to-b from-ink/20 via-ink/40 to-ink/80"></div>
     <div class="relative h-full container-wide flex flex-col justify-end pb-12 lg:pb-16 text-cream">
       <nav class="text-xs uppercase tracking-widest opacity-80 mb-6" aria-label="Breadcrumb">
-        <a href="/" class="hover:text-gold-400">หน้าแรก</a>
+        <a href={url('/')} class="hover:text-gold-400">หน้าแรก</a>
         <span class="mx-2">·</span>
-        <a href="/products" class="hover:text-gold-400">ผลิตภัณฑ์</a>
+        <a href={url('/products')} class="hover:text-gold-400">ผลิตภัณฑ์</a>
       </nav>
       {data.badge && (
         <span class="inline-block text-[10px] uppercase tracking-[0.2em] text-cream bg-ink/40 backdrop-blur px-3 py-1.5 rounded-full mb-4 self-start">
@@ -165,7 +165,7 @@ const metaDesc = `${data.taglineTh} เหมาะกับ ${data.audienceTh} 
         </p>
         <div class="flex flex-col gap-3 mb-10">
           <LineCTA locale={locale} context={data.nameTh} variant="ghost" label="หรือทักฟีนทาง LINE ทันที" />
-          <a href="/find-my-plan" class="text-sm text-teal-700 hover:text-teal-900 inline-flex items-center gap-1">
+          <a href={url('/find-my-plan')} class="text-sm text-teal-700 hover:text-teal-900 inline-flex items-center gap-1">
             ไม่แน่ใจว่าแผนนี้ใช่ไหม? ลอง Find My Plan →
           </a>
         </div>
@@ -187,7 +187,7 @@ const metaDesc = `${data.taglineTh} เหมาะกับ ${data.audienceTh} 
       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         {related.map((r) => (
           <ProductCard
-            href={`/products/${r.slug}`}
+            href={url(`/products/${r.slug}`)}
             name={r.data.nameTh}
             audience={r.data.audienceTh}
             coverage={r.data.coverageTh}

@@ -31,7 +31,7 @@ const quizSchema = {
         พร้อมเหตุผลและขั้นตอนถัดไป ใช้ฟรี ไม่ต้องลงทะเบียน
       </p>
 
-      <form id="quiz" method="get" action="/find-my-plan/result" class="space-y-12">
+      <form id="quiz" method="get" action={import.meta.env.BASE_URL.replace(/\/?$/, '/') + 'find-my-plan/result'} class="space-y-12">
 
         {/* Q1: For whom? */}
         <fieldset data-step="1" class="quiz-step">

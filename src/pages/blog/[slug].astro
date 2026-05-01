@@ -3,6 +3,7 @@ import Layout from '@layouts/Layout.astro';
 import LineCTA from '@components/LineCTA.astro';
 import { getCollection, type CollectionEntry } from 'astro:content';
 import { SITE } from '@lib/site';
+import { url } from '@lib/asset';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
@@ -55,9 +56,9 @@ const jsonLd = faqSchema ? [articleSchema, faqSchema, breadcrumb] : [articleSche
   <article class="container-wide py-section">
     <header class="mb-12 max-w-prose-narrow mx-auto">
       <nav class="text-xs uppercase tracking-widest text-stone-400 mb-6" aria-label="Breadcrumb">
-        <a href="/" class="hover:text-teal-700">หน้าแรก</a>
+        <a href={url('/')} class="hover:text-teal-700">หน้าแรก</a>
         <span class="mx-2">·</span>
-        <a href="/blog" class="hover:text-teal-700">บทความ</a>
+        <a href={url('/blog')} class="hover:text-teal-700">บทความ</a>
       </nav>
       <h1 class="text-display-lg font-display text-ink leading-tight mb-6">{data.title}</h1>
       <p class="text-lg text-stone-600 leading-relaxed mb-8">{data.description}</p>

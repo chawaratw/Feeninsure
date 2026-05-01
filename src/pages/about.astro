@@ -2,6 +2,7 @@
 import Layout from '@layouts/Layout.astro';
 import LineCTA from '@components/LineCTA.astro';
 import { SITE } from '@lib/site';
+import { url } from '@lib/asset';
 
 const locale = 'th' as const;
 
@@ -145,7 +146,7 @@ const personSchema = {
         </p>
       </div>
       <div class="flex md:justify-end gap-3 flex-wrap">
-        <a href="/find-my-plan" class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-medium tracking-wide bg-cream text-teal-700 hover:bg-cream/90 transition">
+        <a href={url('/find-my-plan')} class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-medium tracking-wide bg-cream text-teal-700 hover:bg-cream/90 transition">
           ทำแบบสอบถาม Find My Plan →
         </a>
         <LineCTA locale={locale} context="ปรึกษาฟีนจากหน้า About" variant="ghost" class="border-cream/40 text-cream hover:bg-cream hover:text-teal-700" />
