@@ -31,6 +31,7 @@ const altHref = locale === 'th'
       <span class="text-teal-600">feen</span>insure
     </a>
 
+    {/* Desktop nav links — hidden below lg */}
     <ul class="hidden lg:flex items-center gap-8 text-sm tracking-wide text-stone-600">
       {links.map((l) => (
         <li>
@@ -48,7 +49,8 @@ const altHref = locale === 'th'
       ))}
     </ul>
 
-    <div class="flex items-center gap-3">
+    {/* Desktop right side — hidden below lg */}
+    <div class="hidden lg:flex items-center gap-3">
       {showLocaleToggle && (
         <a
           href={altHref}
@@ -62,5 +64,98 @@ const altHref = locale === 'th'
         {locale === 'th' ? 'ปรึกษาฟีน' : 'Consult Feen'}
       </a>
     </div>
+
+    {/* Hamburger button — shown below lg */}
+    <button
+      id="menu-toggle"
+      class="lg:hidden p-2 -mr-2 rounded-lg text-stone-600 hover:text-teal-700 hover:bg-stone-100 transition"
+      aria-label="Toggle navigation menu"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+    >
+      <svg id="icon-open" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+      <svg id="icon-close" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
   </nav>
+
+  {/* Mobile menu — hidden by default, shown below lg when open */}
+  <div id="mobile-menu" class="hidden lg:hidden border-t border-stone-200 bg-cream" aria-hidden="true">
+    <div class="container-wide py-4">
+      <ul class="space-y-1 mb-5">
+        {links.map((l) => (
+          <li>
+            <a
+              href={l.href}
+              class={l.highlight
+                ? 'flex items-center gap-2 px-4 py-3 rounded-xl bg-teal-50 text-teal-700 font-medium'
+                : 'flex items-center px-4 py-3 rounded-xl text-stone-700 hover:bg-stone-100 hover:text-teal-700 transition'}
+              aria-current={Astro.url.pathname === l.href ? 'page' : undefined}
+            >
+              {l.highlight && <span class="text-gold-500" aria-hidden="true">★</span>}
+              {t(l.key, locale)}
+            </a>
+          </li>
+        ))}
+      </ul>
+      <div class="flex items-center gap-3 pt-4 border-t border-stone-200">
+        <a href={SITE.contact.line.deepLink} class="btn-primary text-sm flex-1 text-center" rel="noopener">
+          {locale === 'th' ? 'ปรึกษาฟีน' : 'Consult Feen'}
+        </a>
+        {showLocaleToggle && (
+          <a
+            href={altHref}
+            class="text-xs uppercase tracking-widest text-stone-400 hover:text-teal-700 px-2"
+            aria-label={`Switch to ${altLocale}`}
+          >
+            {altLocale === 'en' ? 'EN' : 'TH'}
+          </a>
+        )}
+      </div>
+    </div>
+  </div>
 </header>
+
+<script is:inline>
+  (function () {
+    var toggle = document.getElementById('menu-toggle');
+    var menu = document.getElementById('mobile-menu');
+    var iconOpen = document.getElementById('icon-open');
+    var iconClose = document.getElementById('icon-close');
+
+    function openMenu() {
+      menu.classList.remove('hidden');
+      menu.setAttribute('aria-hidden', 'false');
+      toggle.setAttribute('aria-expanded', 'true');
+      iconOpen.classList.add('hidden');
+      iconClose.classList.remove('hidden');
+    }
+
+    function closeMenu() {
+      menu.classList.add('hidden');
+      menu.setAttribute('aria-hidden', 'true');
+      toggle.setAttribute('aria-expanded', 'false');
+      iconOpen.classList.remove('hidden');
+      iconClose.classList.add('hidden');
+    }
+
+    toggle.addEventListener('click', function () {
+      if (menu.classList.contains('hidden')) {
+        openMenu();
+      } else {
+        closeMenu();
+      }
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeMenu();
+    });
+
+    menu.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', closeMenu);
+    });
+  })();
+</script>
