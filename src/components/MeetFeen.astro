@@ -16,7 +16,7 @@ const isTh = locale === 'th';
   <div class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-center">
     <figure class="lg:col-span-5 relative aspect-[4/5] overflow-hidden rounded-3xl bg-stone-100 ring-1 ring-stone-200">
       <img
-        src={import.meta.env.BASE_URL + portrait.replace(/^\//, '')}
+        src={import.meta.env.BASE_URL.replace(/\/?$/, '/') + portrait.replace(/^\//, '')}
         alt={isTh ? 'ฟีน — ชณิชา เศรษฐาอมร' : 'Feen — Chanicha Setha-amorn'}
         loading="eager"
         class="absolute inset-0 h-full w-full object-cover"

@@ -4,6 +4,7 @@ import Nav from '@components/Nav.astro';
 import Footer from '@components/Footer.astro';
 import SchemaInsuranceAgent from '@components/SchemaInsuranceAgent.astro';
 import { SITE, type Locale } from '@lib/site';
+import { asset } from '@lib/asset';
 
 interface Props {
   title: string;
@@ -75,13 +76,13 @@ const hasAlternate = EN_AVAILABLE.has(cleanPath);
 
     {/* Theme + brand */}
     <meta name="theme-color" content="#007B87" />
-    <link rel="icon" type="image/svg+xml" href={import.meta.env.BASE_URL + 'favicon.svg'} />
-    <link rel="apple-touch-icon" href={import.meta.env.BASE_URL + 'icons/apple-touch-icon.png'} />
-    <link rel="manifest" href={import.meta.env.BASE_URL + 'manifest.webmanifest'} />
+    <link rel="icon" type="image/svg+xml" href={asset('favicon.svg')} />
+    <link rel="apple-touch-icon" href={asset('icons/apple-touch-icon.png')} />
+    <link rel="manifest" href={asset('manifest.webmanifest')} />
 
     {/* Self-hosted fonts — preload the two most-used weights for fast first paint */}
-    <link rel="preload" href={import.meta.env.BASE_URL + 'fonts/IBMPlexSansThai-Regular.ttf'} as="font" type="font/ttf" crossorigin />
-    <link rel="preload" href={import.meta.env.BASE_URL + 'fonts/CormorantGaramond-SemiBold.ttf'} as="font" type="font/ttf" crossorigin />
+    <link rel="preload" href={asset('fonts/IBMPlexSansThai-Regular.ttf')} as="font" type="font/ttf" crossorigin />
+    <link rel="preload" href={asset('fonts/CormorantGaramond-SemiBold.ttf')} as="font" type="font/ttf" crossorigin />
 
     {/* Schema.org: site-wide InsuranceAgent */}
     <SchemaInsuranceAgent />

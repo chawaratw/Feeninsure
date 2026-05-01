@@ -7,6 +7,6 @@ const locale = 'th' as const;
     <p class="font-display text-7xl text-gold-500 mb-6">404</p>
     <h1 class="text-display-md font-display mb-6">ไม่พบหน้านี้</h1>
     <p class="text-stone-600 mb-10">ขออภัย หน้าที่คุณกำลังหาอาจถูกย้ายหรือลบไปแล้ว</p>
-    <a href={import.meta.env.BASE_URL} class="btn-primary">กลับหน้าแรก</a>
+    <a href={import.meta.env.BASE_URL.replace(/\/?$/, '/')} class="btn-primary">กลับหน้าแรก</a>
   </section>
 </Layout>
